@@ -4,7 +4,7 @@ namespace Controller;
 
 
 use Cool\BaseController;
-require_once('Model/UserManager.php');
+use UserManager\User;
 //require_once('config/init.php');
 
 class MainController extends BaseController
@@ -24,6 +24,7 @@ class MainController extends BaseController
                 $getFromU = new User();
                 $email = $getFromU->checkInput($email);
                 $password = $getFromU->checkInput($password);
+                $data = [];
     
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $data['error'] = "Invalid format";
@@ -37,6 +38,42 @@ class MainController extends BaseController
                 return $this->render('home.html.twig', $data);
             }
         }
-        return $this->render('login.html.twig');
+        return $this->render('profile.html.twig');
+    }
+    //checking register inpits
+    public function registerAction(){
+        if(isset($_POST['signup'])){
+            $screenName = $_POST['screenName'];
+            $password = $_POST['password'];
+            $email = $_POST['email'];
+    
+            if(empty($screenName) || empty($password) || empty($email))
+            { 
+                $data['error'] = 'ALL field are requierd';
+            }else{
+                $getFromU = new User();
+                $email = $getFromU->checkInput($email);
+                $screenName = $getFromU->checkInput($screenName);
+                $password = $getFromU->checkInput($password);
+               
+    
+                if(!filter_var($email)){
+                    $data['error']  = 'Invalid format';
+                }else if(strlen($screenName) > 20){
+                    $data['error']  = 'Name must be between 6 and 20 chracters';
+                }else if(strlen($password) < 5){
+                    $data['error']= 'Password is too short';
+                }else{
+                    if($getFromU->checkEmail($email) === true){
+                        $dtata['error']= 'Email is alraedy in usrr';
+                        return $this->render('home.html.twig', $data);
+                    }else{
+                        $getFromU->register($email, $screenName, $password);
+                        header('Location: profile.html.twig');
+                    }
+                }
+            }
+        }
+        return $this->render('home.html.twig', $data);
     }
 }

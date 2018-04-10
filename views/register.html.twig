@@ -1,11 +1,5 @@
 {% block content %}
-    {{ path }}
-    <div class="errors">
-        {% for error in errors %}
-            {{ error }} <br>
-        {% endfor %}
-    </div>
-   <form method="post">
+    <form action="?action=register" method="POST">
 <div class="signup-div"> 
 	<h3>Sign up </h3>
 	<ul>
@@ -22,11 +16,9 @@
 			<input type="submit" name="signup" Value="Signup for Twitter">
 		</li>
 	</ul>
-	<!--
-	 <li class="error-li">
-	  <div class="span-fp-error"></div>
-	 </li> 
-	-->
+     <div class="errors">
+       {{ error }}
+    </div>
 </div>
 </form>
 {% endblock %}
