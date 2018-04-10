@@ -67,7 +67,7 @@ class MainController extends BaseController
                     $data['error']= 'Password is too short';
                 }else{
                     if($getFromU->checkEmail($email) === true){
-                        $dtata['error']= 'Email is alraedy in usrr';
+                        $data['error']= 'Email is alraedy in use';
                         return $this->render('home.html.twig', $data);
                     }else{
                         $getFromU->register($email, $screenName, $password);
