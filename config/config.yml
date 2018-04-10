@@ -3,3 +3,4 @@ routes:
     home: "Main:home"
     login: "Main:login"
     register: "Main:register"
+    profile: "Main:profile"

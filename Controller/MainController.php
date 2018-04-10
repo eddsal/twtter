@@ -2,9 +2,10 @@
 
 namespace Controller;
 
-
-use Cool\BaseController;
+require_once('Model/UserManager.php');
 use UserManager\User;
+use Cool\BaseController;
+
 //require_once('config/init.php');
 
 class MainController extends BaseController
@@ -16,7 +17,6 @@ class MainController extends BaseController
     // seeing the data if eveything is ok or not 
     public function loginAction(){
         if(isset($_POST['login']) && !empty($_POST['login'])){
-            
             $email = $_POST['email'];
             $password = $_POST['password'];
     
@@ -46,6 +46,7 @@ class MainController extends BaseController
             $screenName = $_POST['screenName'];
             $password = $_POST['password'];
             $email = $_POST['email'];
+            $data = [];
     
             if(empty($screenName) || empty($password) || empty($email))
             { 
@@ -69,11 +70,12 @@ class MainController extends BaseController
                         return $this->render('home.html.twig', $data);
                     }else{
                         $getFromU->register($email, $screenName, $password);
-                        header('Location: profile.html.twig');
+                        return $this->render('profile.html.twig');
                     }
                 }
             }
+            return $this->render('home.html.twig', $data);
         }
-        return $this->render('home.html.twig', $data);
+       
     }
 }
