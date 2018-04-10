@@ -1,3 +1,4 @@
 homepage_route: "home"
 routes:
     home: "Main:home"
+    login: "Main:login"
