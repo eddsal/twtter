@@ -10,7 +10,7 @@ class User {
     function __construct($pdo){
         $this->pdo = $pdo;
     }
-
+//check input of my email ......
     public function checkInput($var){
         $var = htmlspecialchars($var);
         $var = trim($var);
@@ -18,7 +18,7 @@ class User {
 
         return $var;
     }
-
+        //check if we have the user mail and password in the db
     public function login($email, $password){
         $stmt = $this->pdo->prepare("SELECT `id` FROM `users` WHERE `email` = :email AND `password` = :password");
         $stmt->bindParam(":email",$email, PDO::PARAM_STR);
@@ -36,7 +36,7 @@ class User {
             return false;
         }
     }
-
+    //insertin user data into my database + default photo and cover
     public function register($email, $screenName, $password){
         $stmt = $this->pdo->prepare("INSERT INTO `users` (`email`,`password`,`screenName`,`profileImage`,`profileCover`) VALUES (:email, :password, :screenName, 'assets/images/defaultprofileimage.png', 'assets/images/defaultCoverImage.png')");
         $stmt->bindParam(":email",$email, PDO::PARAM_STR);
@@ -48,6 +48,7 @@ class User {
         $_SESSION['user_id'] = $id;
 
     }
+    //check email on registration
     public function checkEmail($email){
         $stmt = $this->pdo->prepare("SELECT `email` FROM `users` WHERE `email` = :email");
         $stmt->bindParam(":email",$email, PDO::PARAM_STR);

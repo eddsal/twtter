@@ -13,6 +13,7 @@ class MainController extends BaseController
     {
         return $this->render('home.html.twig');
     }
+    // seeing the data if eveything is ok or not 
     public function loginAction(){
         if(isset($_POST['login']) && !empty($_POST['login'])){
             
@@ -29,12 +30,11 @@ class MainController extends BaseController
                 }else{
                     if($getFromU->login($email, $password) === false){
                         $data['error'] = "Email or Password is incorrect!!";
-                        return $this->render('login.html.twig', $error);
                   }
                 }
             }else{
                 $data['error'] = "please enter Email Or Password ";
-                return $this->render('login.html.twig', $data);
+                return $this->render('home.html.twig', $data);
             }
         }
         return $this->render('login.html.twig');
