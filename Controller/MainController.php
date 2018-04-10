@@ -19,7 +19,8 @@ class MainController extends BaseController
         if(isset($_POST['login']) && !empty($_POST['login'])){
             $email = $_POST['email'];
             $password = $_POST['password'];
-    
+
+
             if(!empty($email) || !empty($password)){
                 $getFromU = new User();
                 $email = $getFromU->checkInput($email);
@@ -34,7 +35,7 @@ class MainController extends BaseController
                   }
                 }
             }else{
-                $data['error'] = "please enter Email Or Password ";
+                $data['error'] = "please enter Email and Password ";
                 return $this->render('home.html.twig', $data);
             }
         }
@@ -60,8 +61,8 @@ class MainController extends BaseController
     
                 if(!filter_var($email)){
                     $data['error']  = 'Invalid format';
-                }else if(strlen($screenName) > 20){
-                    $data['error']  = 'Name must be between 6 and 20 chracters';
+                }else if(strlen($screenName) < 6){
+                    $data['error']  = 'Name must be at least  6 chracters';
                 }else if(strlen($password) < 5){
                     $data['error']= 'Password is too short';
                 }else{
