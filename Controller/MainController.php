@@ -19,10 +19,15 @@ class MainController extends BaseController
         if(isset($_POST['login']) && !empty($_POST['login'])){
             $email = $_POST['email'];
             $password = $_POST['password'];
+            if(empty($email) || empty($password)){
 
-
+                $data['error'] = "please fill in the blank";
+                return $this->render('home.html.twig', $data);
+                
+            }
+           
             if(!empty($email) || !empty($password)){
-                $getFromU = new User();
+                $getFromU = new User($pdo);
                 $email = $getFromU->checkInput($email);
                 $password = $getFromU->checkInput($password);
                 $data = [];
@@ -32,6 +37,7 @@ class MainController extends BaseController
                 }else{
                     if($getFromU->login($email, $password) === false){
                         $data['error'] = "Email or Password is incorrect!!";
+                        return $this->render('home.html.twig', $data);
                   }
                 }
             }else{
@@ -43,10 +49,18 @@ class MainController extends BaseController
     }
     //checking register inpits
     public function registerAction(){
+        $username='';
+        $profileImage='assets/images/profileimage.png';
+        $profileCover='assets/images/profileCover.png';
+        $following='';
+        $followers='';
+        $bio='';
+        $country='';
+        $website='';
         if(isset($_POST['signup'])){
-            $screenName = $_POST['screenName'];
-            $password = $_POST['password'];
+            $screenName=$_POST['screenName'];
             $email = $_POST['email'];
+            $password = $_POST['password'];
             $data = [];
     
             if(empty($screenName) || empty($password) || empty($email))
@@ -68,9 +82,8 @@ class MainController extends BaseController
                 }else{
                     if($getFromU->checkEmail($email) === true){
                         $data['error']= 'Email is alraedy in use';
-                        return $this->render('home.html.twig', $data);
                     }else{
-                        $getFromU->register($email, $screenName, $password);
+                        $getFromU->register($email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
                         return $this->render('profile.html.twig');
                     }
                 }

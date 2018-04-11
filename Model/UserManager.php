@@ -18,31 +18,42 @@ class User {
     public function login($email, $password){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-        $stmt = $pdo->prepare("SELECT `id` FROM `users` WHERE `email` = :email AND `password` = :password");
+        $stmt = $pdo->prepare("SELECT  FROM `users` WHERE `email` = :email AND `password` = :password");
         $stmt->bindParam(":email",$email);
-        $pass = md5($password);
-        $stmt->bindParam(":password", $pass);
+        $password = md5($password);
+        $stmt->bindParam(":password", $password);
         $stmt->execute();
 
         $user = $stmt->fetch();
         $count = $stmt->rowCount();
 
         if($count > 0){
-            $_SESSION['user_id'] = $user->id;
+            $_SESSION['id'] = $user->id;
             header('location:home.html.twig');
         }else{
             return false;
         }
     }
     //insertin user data into my database + default photo and cover
-    public function register($email, $screenName, $password){
+    public function register($email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-        $stmt = $pdo->prepare("INSERT INTO `users` (`id`,`email`,`password`,`screenName`,`profileImage`,`profileCover`,`following`,`followers`,`bio`,`country`,`website`) VALUES (NULL,NULL,:email, :password, :screenName, 'assets/images/defaultprofileimage.png', 'assets/images/defaultCoverImage.png',0,0,'ewew','lebanon','www')");
+        $stmt = $pdo->prepare("INSERT INTO `users` (`id`,`username`,`email`,`password`,`screenName`,`profileImage`,`profileCover`,`following`,`followers`,`bio`,`country`,`website`) VALUES (NULL,:username,:email, :password, :screenName, :profileImage,:profileCover ,:following,:followers,:bio, :country, :website)");
+        $stmt->bindParam(":username",$username);
         $stmt->bindParam(":email",$email);
-        $stmt->bindParam(":password", $pass);
+        $stmt->bindParam(":password", $password);
         $stmt->bindParam(":screenName",$screenName);
+        $stmt->bindParam(":profileImage",$profileImage);
+        $stmt->bindParam(":profileCover",$profileCover);
+        $stmt->bindParam(":following",$following);
+        $stmt->bindParam(":followers",$followers);
+        $stmt->bindParam(":bio",$bio);
+        $stmt->bindParam(":country",$country);
+        $stmt->bindParam(":website",$website);
         $stmt->execute();
+
+        var_dump($stmt);
+        //die();
 
         $id = $pdo->lastInsertId();
         $_SESSION['user_id'] = $id;
