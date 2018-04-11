@@ -35,9 +35,10 @@ class User {
         }
     }
     //insertin user data into my database + default photo and cover
-    public function register($email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
+    public function register($username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->prepare("INSERT INTO `users` (`id`,`username`,`email`,`password`,`screenName`,`profileImage`,`profileCover`,`following`,`followers`,`bio`,`country`,`website`) VALUES (NULL,:username,:email, :password, :screenName, :profileImage,:profileCover ,:following,:followers,:bio, :country, :website)");
         $stmt->bindParam(":username",$username);
         $stmt->bindParam(":email",$email);
@@ -52,8 +53,6 @@ class User {
         $stmt->bindParam(":website",$website);
         $stmt->execute();
 
-        var_dump($stmt);
-        //die();
 
         $id = $pdo->lastInsertId();
         $_SESSION['user_id'] = $id;

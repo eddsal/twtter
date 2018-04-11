@@ -23,11 +23,11 @@ class MainController extends BaseController
 
                 $data['error'] = "please fill in the blank";
                 return $this->render('home.html.twig', $data);
-                
+
             }
            
             if(!empty($email) || !empty($password)){
-                $getFromU = new User($pdo);
+                $getFromU = new User();
                 $email = $getFromU->checkInput($email);
                 $password = $getFromU->checkInput($password);
                 $data = [];
@@ -52,8 +52,8 @@ class MainController extends BaseController
         $username='';
         $profileImage='assets/images/profileimage.png';
         $profileCover='assets/images/profileCover.png';
-        $following='';
-        $followers='';
+        $following=0;
+        $followers=0;
         $bio='';
         $country='';
         $website='';
@@ -81,9 +81,9 @@ class MainController extends BaseController
                     $data['error']= 'Password is too short';
                 }else{
                     if($getFromU->checkEmail($email) === true){
-                        $data['error']= 'Email is alraedy in use';
+                        $data['error']= 'Email is already in use';
                     }else{
-                        $getFromU->register($email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
+                        $getFromU->register($username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
                         return $this->render('profile.html.twig');
                     }
                 }
