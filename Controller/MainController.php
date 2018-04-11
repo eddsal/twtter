@@ -34,18 +34,18 @@ class MainController extends BaseController
     
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $data['error'] = "Invalid format";
-                }else{
-                    if($getFromU->login($email, $password) === false){
-                        $data['error'] = "Email or Password is incorrect!!";
-                        return $this->render('home.html.twig', $data);
-                  }
                 }
+                if($getFromU->login($email, $password) === false){
+                     $data['error'] = "Email or Password is incorrect!!";
+                    return $this->render('home.html.twig', $data);
+                  }       
             }else{
                 $data['error'] = "please enter Email and Password ";
                 return $this->render('home.html.twig', $data);
             }
         }
         return $this->render('profile.html.twig');
+        
     }
     //checking register inpits
     public function registerAction(){

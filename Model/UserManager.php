@@ -18,7 +18,8 @@ class User {
     public function login($email, $password){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-        $stmt = $pdo->prepare("SELECT  FROM `users` WHERE `email` = :email AND `password` = :password");
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->prepare("SELECT `email` AND `password` FROM `users` WHERE `email` = :email AND `password` = :password");
         $stmt->bindParam(":email",$email);
         $password = md5($password);
         $stmt->bindParam(":password", $password);
@@ -30,6 +31,7 @@ class User {
         if($count > 0){
             $_SESSION['id'] = $user->id;
             header('location:home.html.twig');
+            exit;
         }else{
             return false;
         }
@@ -42,6 +44,7 @@ class User {
         $stmt = $pdo->prepare("INSERT INTO `users` (`id`,`username`,`email`,`password`,`screenName`,`profileImage`,`profileCover`,`following`,`followers`,`bio`,`country`,`website`) VALUES (NULL,:username,:email, :password, :screenName, :profileImage,:profileCover ,:following,:followers,:bio, :country, :website)");
         $stmt->bindParam(":username",$username);
         $stmt->bindParam(":email",$email);
+        $password = md5($password);
         $stmt->bindParam(":password", $password);
         $stmt->bindParam(":screenName",$screenName);
         $stmt->bindParam(":profileImage",$profileImage);
