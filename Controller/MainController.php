@@ -90,4 +90,23 @@ class MainController extends BaseController
         }
        
     }
+    public function logoutaction()
+    {
+        $getFromU = new User();
+        $getFromU->logout();
+        return $this->redirectToRoute('home');
+    }
+
+    public function profileAction(){
+        
+        $getFromU = new User();
+        $id= $_SESSION['id'];
+        $user = $getFromU->userData($id);
+
+        var_dump($user);
+
+
+      
+    }
+   
 }

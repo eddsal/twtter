@@ -29,7 +29,7 @@ class User {
         $count = $stmt->rowCount();
 
         if($count > 0){
-          return true;
+         $_SESSION['id'] = $user->id;
         }else{
             return false;
         }
@@ -55,7 +55,7 @@ class User {
         $stmt->execute();
 
 
-        $id = $pdo->lastInsertId();
+        $id =   $pdo->lastInsertId();
         $_SESSION['id'] = $id;
 
     }
@@ -74,8 +74,23 @@ class User {
         }else{
             return false;
         }
+    }
+    //take all user data from database to put it in profile
+    public function userData($id){
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `id` = :id");
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch();
 
-
-    }       
+        
+        $id = $pdo->lastInsertId();
+        $_SESSION['id'] = $id;
+    }  
+    public function logout() {
+        session_destroy();
+    }     
   
 }

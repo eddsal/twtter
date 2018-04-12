@@ -1,6 +1,7 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
 
+
 <div class="wrapper">
 <!-- header wrapper -->
 <div class="header-wrapper">
@@ -26,14 +27,16 @@
 					</div>
 				</li>
 
-				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="PROFILE-IMAGE"/></label>
+				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{user.profileImage}}"/></label>
 				<input type="checkbox" id="drop-wrap1">
 				<div class="drop-wrap">
 					<div class="drop-inner">
 						<ul>
-							<li><a href="PROFILE-LINK>">USERNAME</a></li>
+						  {% if user %}
+							<li><a href="{{ screenName }}">{{ screenName}}</a></li>
+							{% endif %}
 							<li><a href="settings/account">Settings</a></li>
-							<li><a href="includes/logout.php">Log out</a></li>
+							<li><a href="?action=logout">Log out</a></li>
 						</ul>
 					</div>
 				</div>
@@ -58,23 +61,23 @@
 			<div class="info-inner">
 				<div class="info-in-head">
 					<!-- PROFILE-COVER-IMAGE -->
-					<img src="PROFILE-COVER"/>
+					<img src="{{ user.profileCover}}"/>
 				</div><!-- info in head end -->
 				<div class="info-in-body">
 					<div class="in-b-box">
 						<div class="in-b-img">
 						<!-- PROFILE-IMAGE -->
-							<img src="PROFILE-IMAGE"/>
+							<img src="{{ user.profileImage}}"/>
 						</div>
 					</div>
                       
 					<div class="info-body-name">
 						<div class="in-b-name">
                        
-							<div><a href="PROFILE-LINK">{{email}}</a></div>
+							<div><a href="{{user.screenName}}">{{user.screenName}}</a></div>
                         
                            
-							<span><small><a href="PROFILE-LINK">@USERNAME</a></small></span>
+							<span><small><a href="{{user.username}}">{{ user.username}}</a></small></span>
 						</div><!-- in b name end-->
 					</div><!-- info body name end-->
 				</div><!-- info in body end-->
@@ -123,7 +126,7 @@
 						 <div class="tweet-h-left">
 						 	<div class="tweet-h-img">
 						 	<!-- PROFILE-IMAGE -->
-						 		<img src="PROFILE-IMAGE"/>
+						 		<img src="{{ user.profileImage}}"/>
 						 	</div>
 						 </div>
 						 <div class="tweet-body">
