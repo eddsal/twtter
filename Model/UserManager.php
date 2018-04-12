@@ -19,7 +19,7 @@ class User {
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->prepare("SELECT `email` AND `password` FROM `users` WHERE `email` = :email AND `password` = :password");
+        $stmt = $pdo->prepare("SELECT * FROM `users` WHERE `email` = :email AND `password` = :password");
         $stmt->bindParam(":email",$email);
         $password = md5($password);
         $stmt->bindParam(":password", $password);
@@ -29,9 +29,7 @@ class User {
         $count = $stmt->rowCount();
 
         if($count > 0){
-            $_SESSION['id'] = $user->id;
-            header('location:home.html.twig');
-            exit;
+          return true;
         }else{
             return false;
         }
@@ -58,7 +56,7 @@ class User {
 
 
         $id = $pdo->lastInsertId();
-        $_SESSION['user_id'] = $id;
+        $_SESSION['id'] = $id;
 
     }
     //check email on registration

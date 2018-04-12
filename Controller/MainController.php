@@ -20,10 +20,7 @@ class MainController extends BaseController
             $email = $_POST['email'];
             $password = $_POST['password'];
             if(empty($email) || empty($password)){
-
                 $data['error'] = "please fill in the blank";
-                return $this->render('home.html.twig', $data);
-
             }
            
             if(!empty($email) || !empty($password)){
@@ -43,8 +40,9 @@ class MainController extends BaseController
                 $data['error'] = "please enter Email and Password ";
                 return $this->render('home.html.twig', $data);
             }
+            return $this->render('profile.html.twig');
         }
-        return $this->render('profile.html.twig');
+       
         
     }
     //checking register inpits
