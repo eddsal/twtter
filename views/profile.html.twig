@@ -2,6 +2,7 @@
 {% block content %}
 
 
+
 <div class="wrapper">
 <!-- header wrapper -->
 <div class="header-wrapper">
@@ -15,6 +16,7 @@
 				<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
 				<li><a href="i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notification</a></li>
 				<li><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
+				
 			</ul>
 		</div><!-- nav left ends-->
 
@@ -70,6 +72,7 @@
 							<img src="{{ user.profileImage}}"/>
 						</div>
 					</div>
+					
                       
 					<div class="info-body-name">
 						<div class="in-b-name">
@@ -130,7 +133,7 @@
 						 	</div>
 						 </div>
 						 <div class="tweet-body">
-						 <form method="post" enctype="multipart/form-data">
+						 <form method="post"  action="?action=tweet" enctype="multipart/form-data">
 							<textarea class="status" name="status" placeholder="Type Something here!" rows="4" cols="50"></textarea>
  						 	<div class="hash-box">
 						 		<ul>
@@ -142,13 +145,15 @@
 						 		<ul>
 						 			<input type="file" name="file" id="file"/>
 						 			<li><label for="file"><i class="fa fa-camera" aria-hidden="true"></i></label>
-						 			<span class="tweet-error"></span>
+						 			<span class="tweet-error">{{ error }}</span>
 						 			</li>
 						 		</ul>
 						 	</div>
 						 	<div class="t-fo-right">
 						 		<span id="count">140</span>
-						 		<input type="submit" name="tweet" value="tweet"/>
+								 
+						 		<input type="submit"  name="tweetBtn" value="tweet"/>
+								 
 				 		</form>
 						 	</div>
 						 </div>

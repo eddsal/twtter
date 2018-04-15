@@ -3,8 +3,11 @@
 namespace Controller;
 
 require_once('Model/UserManager.php');
+
+require_once('Model/TweetManager.php');
 use UserManager\User;
 use Cool\BaseController;
+use TweetManager\Tweet;
 
 //require_once('config/init.php');
 
@@ -40,7 +43,9 @@ class MainController extends BaseController
                 $data['error'] = "please enter Email and Password ";
                 return $this->render('home.html.twig', $data);
             }
+            var_dump($email);;
             return $this->render('profile.html.twig');
+          
         }
        
         
@@ -82,7 +87,10 @@ class MainController extends BaseController
                         $data['error']= 'Email is already in use';
                     }else{
                         $getFromU->register($username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
+                      
                         return $this->render('profile.html.twig');
+                    
+                    
                     }
                 }
             }
@@ -99,14 +107,36 @@ class MainController extends BaseController
 
     public function profileAction(){
         
-        $getFromU = new User();
-        $id= $_SESSION['id'];
-        $user = $getFromU->userData($id);
+       // $getFromU = new User();
+      //  $id= $_SESSION['id'];
+        //$user = $getFromU->userData($id);
 
-        var_dump($user);
+        //var_dump($user);
 
+    }
+        public function tweetAction(){
+            if(isset($_POST['tweetBtn'])){
+                return $this->render('profile.html.twig');
+     
+               /*
+           $getFromU = new Tweet();
+           $getFromU->checkinputs($_POST['status']);
+           $tweetImage = '';
+           if(!empty($status) || !empty($_FILES['file']['name'][0])){
+               if(!empty($_FILES['file']['name'][0])){
+                   $tweetImage = $getFromU->uploadImage($_FILES['file']);
+               }
+               if(strlen($status) > 140){
+                   $data['error']="text too long";
+               }
+               $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
 
-      
+           }else{
+               $data['error']= "To Tweet, you should type or insert an image";
+           }
+           */
+       } 
+        
     }
    
 }

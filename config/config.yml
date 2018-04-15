@@ -1,7 +1,9 @@
 homepage_route: "home"
 routes:
     home: "Main:home"
-    login: "Main:login"
+    profile: "Main:login"
     register: "Main:register"
-    profile: "Main:profile"
     logout: "Main:logout"
+    tweet : "Main:tweet"
+ 
+

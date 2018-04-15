@@ -2,6 +2,7 @@
 namespace UserManager;
 
 use Cool\DBManager;
+use TweetManger\Tweet;
 
 
 class User {
@@ -29,7 +30,7 @@ class User {
         $count = $stmt->rowCount();
 
         if($count > 0){
-         $_SESSION['id'] = $user->id;
+        return true;
         }else{
             return false;
         }
@@ -91,6 +92,8 @@ class User {
     }  
     public function logout() {
         session_destroy();
-    }     
+    }
+    
+    
   
 }
