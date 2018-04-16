@@ -23,13 +23,16 @@
 		<div class="nav-right">
 			<ul>
 				<li>
-					<input type="text" placeholder="Search" class="search"/>
+					<input type="text" placeholder="Search" class="searchm"/>
 					<i class="fa fa-search" aria-hidden="true"></i>
 					<div class="search-result">			
 					</div>
 				</li>
-
-				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{user.profileImage}}"/></label>
+					{% if user is not defined %}
+					<li>bla bla test</li>
+					{% else %}
+				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{user['profileImage']}}"/></label>
+				{% endif %}
 				<input type="checkbox" id="drop-wrap1">
 				<div class="drop-wrap">
 					<div class="drop-inner">
@@ -52,6 +55,7 @@
 </div><!-- nav container ends -->
 
 </div><!-- header wrapper end -->
+<script src="assets/javascript/search.js"></script> 
 
 <!---Inner wrapper-->
 <div class="inner-wrapper">
@@ -110,17 +114,14 @@
 								<span class="count-followers">10</span>
 							</div>
 						</div>	
-					</div><!-- mumber wrapper-->
-				</div><!-- info in footer -->
-			</div><!-- info inner end -->
-		</div><!-- info box end-->
+					</div>
+				</div>
+			</div>
+			</div>
 
-	<!--==TRENDS==-->
- 	  <!---TRENDS HERE-->
- 	<!--==TRENDS==-->
 
-	</div><!-- in left wrap-->
-		</div><!-- in left end-->
+     	</div>
+		</div>
 		<div class="in-center">
 			<div class="in-center-wrap">
 				<!--TWEET WRAPPER-->
@@ -159,37 +160,27 @@
 						 </div>
 					</div>
 				</div><!--TWEET WRAP END-->
-
-			
-				<!--Tweet SHOW WRAPPER-->
-				 <div class="tweets">
- 				  	<!--TWEETS HERE-->
+				 <div class="tweets"> 				 
  				 </div>
- 				<!--TWEETS SHOW WRAPPER-->
+ 				
 
 		    	<div class="loading-div">
 		    		<img id="loader" src="assets/images/loading.svg" style="display: none;"/> 
 		    	</div>
 				<div class="popupTweet"></div>
-				<!--Tweet END WRAPER-->
+				
  			
-			</div><!-- in left wrap-->
-		</div><!-- in center end -->
+			</div>
+		</div>
 
 		<div class="in-right">
 			<div class="in-right-wrap">
+ 			</div>
 
-		 	<!--Who To Follow-->
-		      <!--WHO_TO_FOLLOW HERE-->
-      		<!--Who To Follow-->
+		</div>
+	</div>
 
- 			</div><!-- in left wrap-->
-
-		</div><!-- in right end -->
-
-	</div><!--in full wrap end-->
-
-</div><!-- in wrappper ends-->
-</div><!-- inner wrapper ends-->
-</div><!-- ends wrapper -->
+</div>
+</div>
+</div>
 {% endblock %}

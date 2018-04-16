@@ -9,7 +9,9 @@ class Tweet extends User {
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
 
-        
+
     }
+
+
    
 }

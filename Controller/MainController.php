@@ -117,10 +117,9 @@ class MainController extends BaseController
         public function tweetAction(){
             if(isset($_POST['tweetBtn'])){
                 return $this->render('profile.html.twig');
-     
-               /*
-           $getFromU = new Tweet();
-           $getFromU->checkinputs($_POST['status']);
+
+           $getFromU = new User();
+           $getFromU-> checkInput($_POST['status']);
            $tweetImage = '';
            if(!empty($status) || !empty($_FILES['file']['name'][0])){
                if(!empty($_FILES['file']['name'][0])){
@@ -134,9 +133,41 @@ class MainController extends BaseController
            }else{
                $data['error']= "To Tweet, you should type or insert an image";
            }
-           */
+           
        } 
         
     }
+    public function searchaction(){
+    if(isset($_POST['search'])){
+        var_dump("ssaas");
+        $getFromU = new User();
+        $search = $getFromU->checkInput($_POST['search']);
+        $result = $getFromU->search($search);
+    
+        echo '<div class="nav-right-down-wrap"><ul> ';
+    
+        foreach($result as $user){
+            echo '  <li>
+                      <div class="nav-right-down-inner">
+                        <div class="nav-right-down-left">
+                          <a href="'.BASE_URL.$user->username.'"><img src="'.BASE_URL.$user->profileImage.'"></a>
+                       </div>
+                       <div class="nav-right-down-right">
+                         <div class="nav-right-down-right-headline">
+                            <a href="'.BASE_URL.$user->username.'">.$user->screenname.</a><span>@USERNAME</span>
+                          </div>
+                         <div class="nav-right-down-right-body">
+                        </div>
+                    </div>
+                </div> 
+            </li>
+            </ul>
+            </div> 
+    ';
+        }
+        }
+      }
+    
+    
    
 }

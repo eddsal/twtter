@@ -15,6 +15,18 @@ class User {
 
         return $var;
     }
+    //vraeting search methode
+    public function search($search){
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $stmt = $this->$pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR `screenName` LIKE ?");
+        $stmt->bindValue(1, $search. '%');
+        $stmt->bindValue(2, $search. '%');
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
         //check if we have the user mail and password in the db
     public function login($email, $password){
         $dbm = DBManager::getInstance();
@@ -92,6 +104,15 @@ class User {
     }  
     public function logout() {
         session_destroy();
+    }
+
+    public function create($table,$fields){
+        $table = array();
+        $fields = array();
+        $columns = implode(',', array_keys($fields));
+        $values = ':'.implode(', :', array_keys($fields));
+        $sql = "INSERT INTO {$table} ({$columns}) VALUES ({$values})";
+        
     }
     
     
