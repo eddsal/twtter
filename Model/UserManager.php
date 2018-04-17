@@ -20,7 +20,7 @@ class User {
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $stmt = $this->$pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR `screenName` LIKE ?");
+        $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR `screenName` LIKE ?");
         $stmt->bindValue(1, $search. '%');
         $stmt->bindValue(2, $search. '%');
         $stmt->execute();
@@ -40,6 +40,8 @@ class User {
 
         $user = $stmt->fetch();
         $count = $stmt->rowCount();
+        $id =   $pdo->lastInsertId();
+        $_SESSION['id'] = $id;
 
         if($count > 0){
         return true;
@@ -48,7 +50,7 @@ class User {
         }
     }
     //insertin user data into my database + default photo and cover
-    public function register($username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
+    public function register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -70,6 +72,7 @@ class User {
 
         $id =   $pdo->lastInsertId();
         $_SESSION['id'] = $id;
+             return var_dump($id);
 
     }
     //check email on registration

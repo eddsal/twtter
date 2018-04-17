@@ -28,18 +28,17 @@
 					<div class="search-result">			
 					</div>
 				</li>
-					{% if user is not defined %}
-					<li>bla bla test</li>
-					{% else %}
-				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{user['profileImage']}}"/></label>
-				{% endif %}
-				<input type="checkbox" id="drop-wrap1">
+					
+					
+			<li class="hover"><label class="drop-label" for="drop-wrap1"><img src={{ profileImage }}></label>
+			
+					<input type="checkbox" id="drop-wrap1">
 				<div class="drop-wrap">
 					<div class="drop-inner">
 						<ul>
-						  {% if user %}
+						  
 							<li><a href="{{ screenName }}">{{ screenName}}</a></li>
-							{% endif %}
+						
 							<li><a href="settings/account">Settings</a></li>
 							<li><a href="?action=logout">Log out</a></li>
 						</ul>
@@ -81,7 +80,7 @@
 					<div class="info-body-name">
 						<div class="in-b-name">
                        
-							<div><a href="{{user.screenName}}">{{user.screenName}}</a></div>
+							<div><a href="{{screenName}}">{{ screenName }}</a></div>
                         
                            
 							<span><small><a href="{{user.username}}">{{ user.username}}</a></small></span>
@@ -95,7 +94,7 @@
 								TWEETS
 							</div>
 							<div class="num-body">
-								10
+								{{tweets}}
 							</div>
 						</div>
 						<div class="num-box">
@@ -103,7 +102,7 @@
 								FOLLOWING
 							</div>
 							<div class="num-body">
-								<span class="count-following">10</span>
+								<span class="count-following">{{following}}</span>
 							</div>
 						</div>
 						<div class="num-box">
@@ -111,7 +110,7 @@
 								FOLLOWERS
 							</div>
 							<div class="num-body">
-								<span class="count-followers">10</span>
+								<span class="count-followers">{{followers}}</span>
 							</div>
 						</div>	
 					</div>
@@ -130,7 +129,7 @@
 						 <div class="tweet-h-left">
 						 	<div class="tweet-h-img">
 						 	<!-- PROFILE-IMAGE -->
-						 		<img src="{{ user.profileImage}}"/>
+						 		<img src="{{profileImage}}"/>
 						 	</div>
 						 </div>
 						 <div class="tweet-body">
@@ -146,7 +145,7 @@
 						 		<ul>
 						 			<input type="file" name="file" id="file"/>
 						 			<li><label for="file"><i class="fa fa-camera" aria-hidden="true"></i></label>
-						 			<span class="tweet-error">{{ error }}</span>
+						 			<span class="tweet-error">  {{ error }}</span>
 						 			</li>
 						 		</ul>
 						 	</div>
