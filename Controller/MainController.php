@@ -19,29 +19,20 @@ class MainController extends BaseController
     }
     // seeing the data if eveything is ok or not 
     public function loginAction(){
+        session_start();
+
+
         if(isset($_POST['login']) && !empty($_POST['login'])){
             $email = $_POST['email'];
             $password = $_POST['password'];
-            //return var_dump($_SESSION);         
             if(empty($email) || empty($password)){
                 $data['error'] = "please fill in the blank";
             }
            
             if(!empty($email) || !empty($password)){
                 $getFromU = new User();
-                $email = $getFromU->checkInput($email);
-                $password = $getFromU->checkInput($password);
-                $data = [];
-  
-                $username='';
-                $profileImage='assets/images/profileimage.png';
-                $profileCover='assets/images/profileCover.png';
-                $following= 
-               /// $followers= $getFromU->register($id);
-                $bio='';
-                $country='';
-                $website='';
-                
+                $data = $getFromU->login($email, $password);
+
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $data['error'] = "Invalid format";
                 }
@@ -52,31 +43,8 @@ class MainController extends BaseController
             }else{
                 $data['error'] = "please enter Email and Password ";
                 return $this->render('home.html.twig', $data);
-            }
-            $datau= [
-                'username'=>$username,
-                'email'=>$email,
-                //'screenName'=>$screenName,
-                'profileImage'=>$profileImage,
-                'profileCover'=>$profileCover,
-               // 'followers'=>$followers,
-                'following'=>$following,
-                'bio'=>$bio,
-                'country'=>$country,
-                'website'=>$website,
-               
-            
-                ];
-               
-                 
-
-
-               
-    
-        
-          
-   
-            return $this->render('profile.html.twig', $datau);
+            }       
+            return $this->render('profile.html.twig', $data);
           
         }
         
@@ -103,11 +71,6 @@ class MainController extends BaseController
                 $data['error'] = 'ALL field are requierd';
             }else{
                 $getFromU = new User();
-                $email = $getFromU->checkInput($email);
-                $screenName = $getFromU->checkInput($screenName);
-                $password = $getFromU->checkInput($password);
-               
-    
                 if(!filter_var($email)){
                     $data['error']  = 'Invalid format';
                 }else if(strlen($screenName) < 6){
@@ -135,9 +98,7 @@ class MainController extends BaseController
                         
                        // array($username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
                         $getFromU->register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
-                        $_SESSION['id'] = $id;
-                        return var_dump($id);
-                        die();
+                        
                 
                         return $this->render('profile.html.twig', $data);
                     
@@ -166,46 +127,43 @@ class MainController extends BaseController
 
     }
         public function tweetAction(){
+            session_start();
             
             if(isset($_POST['tweetBtn'])){
-                return $this->render('profile.html.twig');
-
-           $getFromU = new User();
-           $getFromU-> checkInput($_POST['status']);
-           $tweetImage = '';
-             if(strlen($status) > 140){
-                   $data['error']="text too long";
-                   return $this->render('profile.html.twig', $data);
-
-               }
-               $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
-
-           }else{
-               $data['error']= "To Tweet, you should type or insert an image";
-               return $this->render('profile.html.twig', $data);
-           }
+                $getFromU = new User();
+                $user = $getFromU->getUser();
+                $tweetImage = '';
+                if(strlen($status) > 140){
+                    $data['error']="text too long";
+                    return $this->render('profile.html.twig', $data);
+                }
+                //$getFromU->create('tweets', array('status' => $status, 'tweetBy' => $id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
+                }if(empty($status)){
+                    $data['error']= "To Tweet, you should type or insert an image";
+                    return $this->render('profile.html.twig', $data);
+                } else {
+                    return $this->render('profile.html.twig', $user);
+                }
            
        } 
         
     
     public function searchaction(){
     if(isset($_POST['search'])){
-        var_dump("ssaas");
         $getFromU = new User();
-        $search = $getFromU->checkInput($_POST['search']);
         $result = $getFromU->search($search);
     
         echo '<div class="nav-right-down-wrap"><ul> ';
     
-        foreach($result as $id){
+        foreach($result as $user){
             echo '  <li>
                       <div class="nav-right-down-inner">
                         <div class="nav-right-down-left">
-                          <a href="'.$id->username.'"><img src="'.$id->profileImage.'"></a>
+                          <a href="'.$user->username.'"><img src="'.$user->profileImage.'"></a>
                        </div>
                        <div class="nav-right-down-right">
                          <div class="nav-right-down-right-headline">
-                            <a href="'.$id->username.'">.$user->screenname.</a><span>@USERNAME</span>
+                            <a href="'.$user->username.'">.$user->screenname.</a><span>@USERNAME</span>
                           </div>
                          <div class="nav-right-down-right-body">
                         </div>
