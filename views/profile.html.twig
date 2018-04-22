@@ -37,9 +37,9 @@
 					<div class="drop-inner">
 						<ul>
 						  
-							<li><a href="{{ screenName }}">{{ screenName}}</a></li>
+							<li><a href="#">{{ screenName}}</a></li>
 						
-							<li><a href="settings/account">Settings</a></li>
+							<li><a href="?action=settings">Settings</a></li>
 							<li><a href="?action=logout">Log out</a></li>
 						</ul>
 					</div>
@@ -83,7 +83,7 @@
 							<div><a href="{{screenName}}">{{ screenName }}</a></div>
                         
                            
-							<span><small><a href="{{user.username}}">{{ user.username}}</a></small></span>
+							<span><small><a href="{{user}}">{{ user.username}}</a></small></span>
 						</div><!-- in b name end-->
 					</div><!-- info body name end-->
 				</div><!-- info in body end-->
@@ -159,7 +159,8 @@
 						 </div>
 					</div>
 				</div><!--TWEET WRAP END-->
-				 <div class="tweets"> 				 
+				 <div class="tweets"> 	
+				 {{data}}			 
  				 </div>
  				
 

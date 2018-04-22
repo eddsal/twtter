@@ -6,5 +6,6 @@ routes:
     logout: "Main:logout"
     tweet : "Main:tweet"
     search: "Main:search"
+    settings : "Main:settings"
  
 

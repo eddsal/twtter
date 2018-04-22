@@ -8,7 +8,7 @@ use TweetManger\Tweet;
 class User {
 
     //vraeting search methode
-  /*  public function search($search){
+       public function search($search){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -16,12 +16,12 @@ class User {
         $stmt->bindValue(1, $search. '%');
         $stmt->bindValue(2, $search. '%');
         $stmt->execute();
-        
-        return $stmt->fetchAll();
-    }
-    */
+
+        $search =  $stmt->fetchAll();
+        return $search;
+       }
         //check if we have the user mail and password in the db
-    public function login($email, $password){
+    public function checklogin($email, $password){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -35,18 +35,17 @@ class User {
 
         return $user;
     }
+    public function login($email, $id)
+    {
+        $_SESSION['email'] = $email;
+        $_SESSION['id'] = $id;
+    }
     //insertin user data into my database + default photo and cover
     public function register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-
-
-        $stmt = $pdo->prepare("SELECT `email` FROM `users` WHERE `email` = :email");
-        $stmt->bindParam(":email",$email);
-        $stmt->execute();
-
-
+      //  $_SESSION['id']=$id;
         $stmt = $pdo->prepare("INSERT INTO `users` (`id`,`username`,`email`,`password`,`screenName`,`profileImage`,`profileCover`,`following`,`followers`,`bio`,`country`,`website`) VALUES (NULL,:username,:email, :password, :screenName, :profileImage,:profileCover ,:following,:followers,:bio, :country, :website)");
         $stmt->bindParam(":username",$username);
         $stmt->bindParam(":email",$email);
@@ -87,22 +86,63 @@ class User {
     public function logout() {
         session_destroy();
     }
+    public function Update($table,$id,$fields = array()){
+        $columns = '';
+        $i = 1;
 
-    public function create($table,$fields){
-        $table = array();
-        $fields = array();
+        foreach($fields as $name => $values){
+            $columns .="{$name} = :{$name}";
+            if($i < count($fields)){
+                $columns .= ', ';
+            }
+            $i++;
+        }
+        $sql = "UPDATE {$table} SET {$columns} WHERE `id` = {$id}";
+        if($stmt = $this->pdo->prepare($sql)){
+            foreach ($fields as $key => $value){
+                $stmt->bindValue(':'.$key, $value);
+            }
+        }
+    }
+    
+
+    public function create($table,$fields = array()){
         $columns = implode(',', array_keys($fields));
         $values = ':'.implode(', :', array_keys($fields));
-        $sql = "INSERT INTO {$table} ({$columns}) VALUES ({$values})";
+        $sql = "INSERT INTO {$table} ({$columns} VALUES ({$values}))";
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        if($stmt = $pdo->prepare($sql)){
+            foreach ($fields as $key => $data){
+                $stmt->bindValue(':' .$key, $data); 
+            }
+            $stmt->execute();
+        //    return $this->pdo->lastInsertId();
+        }
         
     } 
     public function getUser(){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-        $stmt = $pdo->prepare("SELECT * FROM `users`");
-        $stmt->execute();
-        $user = $stmt->fetch();
-        
-        return $user;
+        $result = $pdo->prepare("SELECT * FROM users    ");
+        $result->bindParam(':id',$id);
+        $result->execute();
+        $post = $result->fetchAll();
+
+        return $post
+        ;
     }
+    
+    public function getUserByUsername($screenName)
+    {
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+
+        $result = $pdo->prepare('SELECT * FROM users WHERE screenName = :screenName');
+        $result->execute([':screenName' => $screenName]);
+        $users = $result->fetch();
+
+        return $users;
+    }
+    
 }
