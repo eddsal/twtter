@@ -39,6 +39,7 @@ class User {
     {
         $_SESSION['email'] = $email;
         $_SESSION['id'] = $id;
+        var_dump( $_SESSION['id']);
     }
     //insertin user data into my database + default photo and cover
     public function register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
@@ -121,10 +122,10 @@ class User {
         }
         
     } 
-    public function getUser(){
+    public function getUser($id){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-        $result = $pdo->prepare("SELECT * FROM users    ");
+        $result = $pdo->prepare("SELECT * FROM users WHERE id = :id");
         $result->bindParam(':id',$id);
         $result->execute();
         $post = $result->fetchAll();

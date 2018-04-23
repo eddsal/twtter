@@ -43,9 +43,12 @@ class MainController extends BaseController
                 return $this->render('home.html.twig', $data);
             }       
             if (true == $data) {
+              //  var_dump($data['id']);
+                //die;
+               
                 $userManager = new User();
                 $user = $userManager->getUserByUsername($email);
-                $userManager->login($email, $user['id']);
+                $userManager->login($email, $data['id']);
               //  $logManager->writeToLog('connect to account with the id ' . $user['id'], false);
               return $this->render('profile.html.twig',$data );
         } 
@@ -125,7 +128,11 @@ class MainController extends BaseController
         if(isset($_POST['tweetBtn'])){
 
             $getFromU = new User();
-            $data= $getFromU->getUser();
+            $data= $getFromU->getUser($_SESSION['id']);
+
+            var_dump($data);
+            die();
+
             $tweetImage = '';
             $status = $_POST['status'];
             if(strlen($status) > 140){

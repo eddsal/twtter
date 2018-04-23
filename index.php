@@ -4,6 +4,7 @@ require_once('vendor/autoload.php');
 
 use Symfony\Component\Yaml\Yaml;
 use Routing\Router;
+session_start();
 
 $config = Yaml::parseFile('config/config.yml');
 $params = Yaml::parseFile('config/parameters.yml');
