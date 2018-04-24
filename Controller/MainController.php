@@ -19,8 +19,6 @@ class MainController extends BaseController
     }
     // seeing the data if eveything is ok or not 
     public function loginAction(){
-        session_start();
-
         if(isset($_POST['login']) && !empty($_POST['login'])){
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -116,23 +114,15 @@ class MainController extends BaseController
     }
 
     public function profileAction(){
-        
-       // $getFromU = new User();
-      //  $id= $_SESSION['id'];
-        //$user = $getFromU->userData($id);
-
-        //var_dump($user);
-
+        $getFromU = new User();
+        $data = $getFromU->getUser($_SESSION['id']);
+        return $this->render('profile.html.twig', $data);
     }
     public function tweetAction(){
         if(isset($_POST['tweetBtn'])){
 
             $getFromU = new User();
-            $data= $getFromU->getUser($_SESSION['id']);
-
-            var_dump($data);
-            die();
-
+            $data = $getFromU->getUser($_SESSION['id']);
             $tweetImage = '';
             $status = $_POST['status'];
             if(strlen($status) > 140){
@@ -261,9 +251,12 @@ class MainController extends BaseController
     }
     public function settingsAction(){
         $getFromU = new User();
-        $data= $getFromU->getUser();
+        $data = $getFromU->getUser($_SESSION['id']);
+        //var_dump('<pre>',$data);
+      //  var_dump('<pre>',$data['id']);
         return $this->render('pEdit.html.twig',$data);
 
 
     }
+   
 }

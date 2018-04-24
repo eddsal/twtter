@@ -9,7 +9,7 @@
 	<div class="nav">
 		<div class="nav-left">
 			<ul>
-				<li><a href="home.php"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+				<li><a href="?action=profile"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
 				<li><a href="i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notification</a></li>
 				<l><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
 			</ul>
@@ -21,12 +21,12 @@
 				<div class="search-result">
 					 			
 				</div></li>
-				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="PROFILE-IMAGE"/></label>
+				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{profileImage}}"/></label>
 				<input type="checkbox" id="drop-wrap1">
 				<div class="drop-wrap">
 					<div class="drop-inner">
 						<ul>    
-							<li><a href="#">{{ screenName}}</a></li>
+							<li><a href="#">{{ screenName }}</a></li>
 							<li><a href="?action=settings">Settings</a></li>
 							<li><a href="?action=logout">Log out</a></li>
 						</ul>
@@ -49,7 +49,7 @@
 <div class="profile-cover-inner">
 	<div class="profile-cover-img">
 	   <!-- PROFILE-COVER -->
-		<img src="PROFILE-COVER"/>
+		<img src="{{ profileCover }}"/>
  
 		<div class="img-upload-button-wrap">
 			<div class="img-upload-button1">
@@ -149,7 +149,7 @@
 	<div class="profile-info-inner">
 		<div class="profile-img">
 			<!-- PROFILE-IMAGE -->
-			<img src="PROFILE-IMAGE"/>
+			<img src="{{ profileImage }}"/>
  			<div class="img-upload-button-wrap1">
 			 <div class="img-upload-button">
 				<label for="img-upload-btn">
@@ -192,15 +192,15 @@
 						 </li>
 					 </ul>  -->
 					<div class="profile-name">
-						<input type="text" name="screenName" value="SCREEN-NAME"/>
+						<input type="text" name="screenName" value="{{ screenName }}"/>
 					</div>
 					<div class="profile-tname">
-						@USERNAME
+						{{userName}}
 					</div>
 				</div>
 				<div class="profile-bio-wrap">
 					<div class="profile-bio-inner">
-						<textarea class="status" name="bio">PROFILE-BIO</textarea>
+						<textarea class="status" name="bio">{{bio}}</textarea>
 						<div class="hash-box">
 					 		<ul>
 					 		</ul>
@@ -212,12 +212,12 @@
 						<ul>
 							<li>
 								<div class="profile-ex-location">
-									<input id="cn" type="text" name="country" placeholder="Country" value="COUNTRY" />
+									<input id="cn" type="text" name="country" placeholder="Country" value="{{ country }}" />
 								</div>
 							</li>
 							<li>
 								<div class="profile-ex-location">
-									<input type="text" name="website" placeholder="Website" value="WEBSITE"/>
+									<input type="text" name="website" placeholder="Website" value="{{ website }}"/>
 								</div>
 							</li>
 				</form>

@@ -7,5 +7,6 @@ routes:
     tweet : "Main:tweet"
     search: "Main:search"
     settings : "Main:settings"
+    profile: "Main:profile"
  
 

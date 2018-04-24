@@ -128,10 +128,9 @@ class User {
         $result = $pdo->prepare("SELECT * FROM users WHERE id = :id");
         $result->bindParam(':id',$id);
         $result->execute();
-        $post = $result->fetchAll();
+        $post = $result->fetch();
 
-        return $post
-        ;
+        return $post;
     }
     
     public function getUserByUsername($screenName)
