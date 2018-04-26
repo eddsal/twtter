@@ -8,5 +8,6 @@ routes:
     search: "Main:search"
     settings : "Main:settings"
     profile: "Main:profile"
+    update: "Main:update"
  
 

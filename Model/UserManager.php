@@ -14,9 +14,8 @@ class User {
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR `screenName` LIKE ?");
         $stmt->bindValue(1, $search. '%');
-        $stmt->bindValue(2, $search. '%');
+       // $stmt->bindValue(2, $search. '%');
         $stmt->execute();
-
         $search =  $stmt->fetchAll();
         return $search;
        }
@@ -98,7 +97,7 @@ class User {
             }
             $i++;
         }
-        $sql = "UPDATE {$table} SET {$columns} WHERE `id` = {$id}";
+        $sql = "UPDATE {$table} SET {$columns} WHERE `id` = {$_SESSION['id']}";
         if($stmt = $this->pdo->prepare($sql)){
             foreach ($fields as $key => $value){
                 $stmt->bindValue(':'.$key, $value);
@@ -110,17 +109,16 @@ class User {
     public function create($table,$fields = array()){
         $columns = implode(',', array_keys($fields));
         $values = ':'.implode(', :', array_keys($fields));
-        $sql = "INSERT INTO {$table} ({$columns} VALUES ({$values}))";
+        $sql = "INSERT INTO {$table}  ({$columns} VALUES ({$values}))";
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         if($stmt = $pdo->prepare($sql)){
             foreach ($fields as $key => $data){
-                $stmt->bindValue(':' .$key, $data); 
+                $stmt->bindValue($key, $data);
             }
             $stmt->execute();
-        //    return $this->pdo->lastInsertId();
+            return $sql;
         }
-        
     } 
     public function getUser($id){
         $dbm = DBManager::getInstance();
@@ -137,7 +135,6 @@ class User {
     {
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-
         $result = $pdo->prepare('SELECT * FROM users WHERE screenName = :screenName');
         $result->execute([':screenName' => $screenName]);
         $users = $result->fetch();

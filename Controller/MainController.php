@@ -132,7 +132,9 @@ class MainController extends BaseController
                 $data['error']= "To Tweet, you should type or insert an image";
                 return $this->render('profile.html.twig', $data);
             } else {
-            //$getFromU->create('tweets', array('status' => $status, 'tweetBy' => $id, 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
+            $ee =  $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $_SESSION['id'], 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
+             var_dump('<pre>',$ee);
+             die();
                 return $this->render('profile.html.twig', $data);
             }  
           $getFromU = new Tweet();
@@ -258,5 +260,17 @@ class MainController extends BaseController
 
 
     }
+    public function updateAction(){
+        if(isset($_POST['savez'])){
+         $_SESSION['id'] =$id ;
+        $getFromU = new User();
+        $user = $getFromU->getUser($_SESSION['id']);
+        $getFromU->update('users', $id, array(`username` => 'eddy'));
+        var_dump($getFromU->update('users', $id, array(`username` => 'eddy')));
+
+       
+            return $this->render('profile.html.twig', $data);
+    }
    
+}
 }
