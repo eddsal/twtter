@@ -88,23 +88,26 @@ class User {
     }
     public function Update($table,$id,$fields = array()){
         $columns = '';
-        $i = 1;
-
+         $i = 1;
+     
         foreach($fields as $name => $values){
-            $columns .="{$name} = :{$name}";
+            $columns .= "`{$name}` = :{$name}";
             if($i < count($fields)){
                 $columns .= ', ';
             }
             $i++;
         }
-        $sql = "UPDATE {$table} SET {$columns} WHERE `id` = {$_SESSION['id']}";
-        if($stmt = $this->pdo->prepare($sql)){
-            foreach ($fields as $key => $value){
-                $stmt->bindValue(':'.$key, $value);
-            }
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $sql = "UPDATE {$table} SET {$columns} WHERE `id` = $id";
+            if($stmt = $pdo->prepare($sql)){
+                 foreach ($fields as $key => $value){
+                    $stmt->bindValue(':'.$key, $value);
+            } 
+
+            $stmt->execute();  
         }
     }
-    
 
     public function create($table,$fields = array()){
         $columns = implode(',', array_keys($fields));
@@ -116,8 +119,9 @@ class User {
             foreach ($fields as $key => $data){
                 $stmt->bindValue($key, $data);
             }
+           
             $stmt->execute();
-            return $sql;
+           
         }
     } 
     public function getUser($id){

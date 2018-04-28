@@ -261,16 +261,18 @@ class MainController extends BaseController
 
     }
     public function updateAction(){
-        if(isset($_POST['savez'])){
-         $_SESSION['id'] =$id ;
-        $getFromU = new User();
-        $user = $getFromU->getUser($_SESSION['id']);
-        $getFromU->update('users', $id, array(`username` => 'eddy'));
-        var_dump($getFromU->update('users', $id, array(`username` => 'eddy')));
-
        
-            return $this->render('profile.html.twig', $data);
-    }
+        if(isset($_POST['savez'])){
+         $screenName = $_POST['screenName'];
+         $bio = $_POST['bio'];
+         $country = $_POST['country'];
+         $website = $_POST['website'];
+         $getFromU = new User();
+         $data = $getFromU->getUser($_SESSION['id']);
+         $id=$_SESSION['id'];
+         $getFromU->update('users', $id,array('screenName' => $screenName,'bio' => $bio, 'country' => $country,'website' => $website));
+         return $this->render('profile.html.twig', $data);
+      }
    
 }
 }
