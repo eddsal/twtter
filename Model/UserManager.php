@@ -118,10 +118,9 @@ class User {
         if($stmt = $pdo->prepare($sql)){
             foreach ($fields as $key => $data){
                 $stmt->bindValue($key, $data);
-            }
-           
+            }   
             $stmt->execute();
-           
+            return $sql;  
         }
     } 
     public function getUser($id){
@@ -135,8 +134,8 @@ class User {
         return $post;
     }
     
-    public function getUserByUsername($screenName)
-    {
+    public function getUserByUsername($screenName){
+
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $result = $pdo->prepare('SELECT * FROM users WHERE screenName = :screenName');
@@ -144,6 +143,27 @@ class User {
         $users = $result->fetch();
 
         return $users;
+    }
+    public function uploadImage($file){
+
+        $fileName = basename($file['name']);
+        $fileTmp =$file['tmp_name'];
+        $fileSize =$file['size'];
+        $error = $file['error'];
+
+        $ext = explode('.', $fileName);
+        $ext = strtolower(end($ext));
+        $allowedExt = array('jpg','png','jpeg');
+
+        if(in_array($ext,$allowedExt)===true){
+            if($error === 0){
+                if($fileSize <= 209272152){
+                    $fileRoot = './users/' .$fileName;
+                    move_uploaded_file($fileTmp, $fileRoot);
+                    return $fileRoot;
+                }   
+            }
+        }
     }
     
 }

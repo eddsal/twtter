@@ -132,9 +132,10 @@ class MainController extends BaseController
                 $data['error']= "To Tweet, you should type or insert an image";
                 return $this->render('profile.html.twig', $data);
             } else {
-            $ee =  $getFromU->create('tweets', array('status' => $status, 'tweetBy' => $_SESSION['id'], 'tweetImage' => $tweetImage, 'postedOn' => date('Y-m-d H:i:s') ));
-             var_dump('<pre>',$ee);
-             die();
+              $lolo =$getFromU->create('tweets', array('status' => $status, 'postedOn' => date('Y-m-d H:i:s') ));
+
+          var_dump($lolo);
+          die();
                 return $this->render('profile.html.twig', $data);
             }  
           $getFromU = new Tweet();
@@ -261,8 +262,9 @@ class MainController extends BaseController
 
     }
     public function updateAction(){
-       
+        $getFromU = new User();
         if(isset($_POST['savez'])){
+       
          $screenName = $_POST['screenName'];
          $bio = $_POST['bio'];
          $country = $_POST['country'];
@@ -270,9 +272,20 @@ class MainController extends BaseController
          $getFromU = new User();
          $data = $getFromU->getUser($_SESSION['id']);
          $id=$_SESSION['id'];
-         $getFromU->update('users', $id,array('screenName' => $screenName,'bio' => $bio, 'country' => $country,'website' => $website));
-         return $this->render('profile.html.twig', $data);
-      }
-   
-}
+         $getFromU->update('users', $id,array('screenName' => $screenName,'bio' => $bio, 'country' => $country,'website' => $website));   
+    }
+    if(isset($_FILES['profileImage'])){
+        $profileImage = $_FILES['profileImage'];
+        $root =$getFromU->uploadImage($_FILES['profileImage']);
+        $getFromU->update('users', $id, array('profileImage'=> $root));   
+    }
+    if(isset($_FILES['profileCover'])){
+        $profileCover = $_FILES['profileCover'];
+        $root =$getFromU->uploadImage($_FILES['profileCover']);
+        $getFromU->update('users', $id, array('profileCover'=> $root));   
+    }
+    return $this->render('pEdit.html.twig',$data);
+     }
+
+
 }
