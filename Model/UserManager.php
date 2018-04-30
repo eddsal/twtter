@@ -109,34 +109,40 @@ class User {
         }
     }
 
-    public function create($table,$fields = array()){
-        $columns = '';
-        $i = 1;
-        foreach($fields as $name => $values){
-            $columns .= "`{$name}`";
-            if($i < count($fields)){
-                $columns .= ', ';
-            }
-            $i++;
-        }
-        $values = ':'.implode(', :', array_keys($fields));
-        $sql = "INSERT INTO {$table}  ({$columns}) VALUES ({$values})";
-        $dbm = DBManager::getInstance();
-        $pdo = $dbm->getPdo();
-        if($stmt = $pdo->prepare($sql)){
-            foreach ($fields as $key => $data){
-                $stmt->bindValue($key, $data);
-            }   
-            $result = $stmt->execute();
-            var_dump($result);
-        }
-    } 
-    // public function create($tweet){
+    // public function create($table,$fields = array()){
+    //     $columns = implode(',', array_keys($fields));
+    //     $values = ':'.implode(', :', array_keys($fields));
+    //     $sql = "INSERT INTO {$table}  ({$columns}) VALUES ({$values})";
     //     $dbm = DBManager::getInstance();
     //     $pdo = $dbm->getPdo();
-    //     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    //     $stmt = $pdo->prepare("INSERT INTO `tweets` ('status') VALUES (:status)");
-    // }
+    //     if($stmt = $pdo->prepare($sql)){
+    //         foreach ($fields as $key => $data){
+    //             //$stmt->bindValue($columns);
+    //             $stmt->bindValue(':' .$key, $data);
+    //         }   
+    //         $stmt->execute();
+    //         return $stmt;
+            
+    //     }
+    // } 
+    public function create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg){
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->prepare("INSERT INTO `tweets`(`tweetID`, `status`, `tweetBy`, `retweetId`, `retweetBy`, `tweetImage`, `likeCount`, `retweetCount`, `postedOn`, `retweetMsg`) VALUES (NULL, :status, :id ,:retweetId,:retweetBy,:tweetImage,:likeCount,:retweetCount,:postedOn,:retweetMsg)");
+    
+        $stmt->bindParam(":status",$status);
+        $stmt->bindParam(":id",$_SESSION['id']);
+        $stmt->bindParam(":retweetId",$retweetId);
+        $stmt->bindParam(":retweetBy",$retweetBy);
+        $stmt->bindParam(":tweetImage",$tweetImage);
+        $stmt->bindParam(":likeCount",$likeCount);
+        $stmt->bindParam(":retweetCount",$retweetCount);
+        $stmt->bindParam(":postedOn",$postedOn);
+        $stmt->bindParam(":retweetMsg",$retweetMsg);
+        
+         $stmt->execute();
+    }
     public function getUser($id){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();

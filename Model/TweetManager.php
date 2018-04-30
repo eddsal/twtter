@@ -13,7 +13,7 @@ class Tweet extends User {
         $stmt->execute();
         $tweets = $stmt->fetchAll();
 
-       return $tweets;
+    
     }
 
    
