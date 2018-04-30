@@ -12,12 +12,13 @@ class User {
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `username` LIKE ? OR `screenName` LIKE ?");
-        $stmt->bindValue(1, $search. '%');
-       // $stmt->bindValue(2, $search. '%');
+        $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users`");
+      
         $stmt->execute();
-        $search =  $stmt->fetchAll();
+        $search =  $stmt->fetchAll(\PDO::FETCH_OBJ);
+      
         return $search;
+      
        }
         //check if we have the user mail and password in the db
     public function checklogin($email, $password){
@@ -89,7 +90,6 @@ class User {
     public function Update($table,$id,$fields = array()){
         $columns = '';
          $i = 1;
-     
         foreach($fields as $name => $values){
             $columns .= "`{$name}` = :{$name}";
             if($i < count($fields)){
@@ -110,19 +110,33 @@ class User {
     }
 
     public function create($table,$fields = array()){
-        $columns = implode(',', array_keys($fields));
+        $columns = '';
+        $i = 1;
+        foreach($fields as $name => $values){
+            $columns .= "`{$name}`";
+            if($i < count($fields)){
+                $columns .= ', ';
+            }
+            $i++;
+        }
         $values = ':'.implode(', :', array_keys($fields));
-        $sql = "INSERT INTO {$table}  ({$columns} VALUES ({$values}))";
+        $sql = "INSERT INTO {$table}  ({$columns}) VALUES ({$values})";
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         if($stmt = $pdo->prepare($sql)){
             foreach ($fields as $key => $data){
                 $stmt->bindValue($key, $data);
             }   
-            $stmt->execute();
-            return $sql;  
+            $result = $stmt->execute();
+            var_dump($result);
         }
     } 
+    // public function create($tweet){
+    //     $dbm = DBManager::getInstance();
+    //     $pdo = $dbm->getPdo();
+    //     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    //     $stmt = $pdo->prepare("INSERT INTO `tweets` ('status') VALUES (:status)");
+    // }
     public function getUser($id){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();

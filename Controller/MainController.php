@@ -132,14 +132,14 @@ class MainController extends BaseController
                 $data['error']= "To Tweet, you should type or insert an image";
                 return $this->render('profile.html.twig', $data);
             } else {
-              $lolo =$getFromU->create('tweets', array('status' => $status, 'postedOn' => date('Y-m-d H:i:s') ));
-
-          var_dump($lolo);
-          die();
+              $lolo =$getFromU->create($status);
                 return $this->render('profile.html.twig', $data);
             }  
           $getFromU = new Tweet();
           $tweet =$getFromU->tweets($tweets);
+
+          var_dump($tweet);
+          die();
           foreach($tweets as $tweet){
               echo '<div class="all-tweet">
               <div class="t-show-wrap">
@@ -227,19 +227,20 @@ class MainController extends BaseController
     public function searchaction(){
     if(isset($_POST['search'])){
         $getFromU = new User();
-        $search = $getFromU->getUser();
+        $search = $getFromU->getUser($_SESSION['id']);
         $result = $getFromU->search($search);
+        
         echo '<div class="nav-right-down-wrap"><ul> ';
     
         foreach($result as $search){
             echo '  <li>
                       <div class="nav-right-down-inner">
                         <div class="nav-right-down-left">
-                          <a href="'.$data->username.'"><img src="'.$data->profileImage.'"></a>
+                          <a href="."><img src="sa"></a>
                        </div>
                        <div class="nav-right-down-right">
                          <div class="nav-right-down-right-headline">
-                            <a href="'.$user->username.'">.$user->screenname.</a><span>@USERNAME</span>
+                            <a href=""></a><span></span>
                           </div>
                          <div class="nav-right-down-right-body">
                         </div>
