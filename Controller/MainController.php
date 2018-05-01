@@ -130,23 +130,21 @@ class MainController extends BaseController
     
         foreach($result as $search){
            
-            echo '  <li>
+            echo ' <li>
                       <div class="nav-right-down-inner">
                         <div class="nav-right-down-left">
-                          <a href="$user->screenName"><img src="'.$search->profileImage.' "></a>
+                          <a href=""><img src="'.$search->profileImage.'"></a>
                        </div>
                        <div class="nav-right-down-right">
                          <div class="nav-right-down-right-headline">
-                            <a href="">'.$search->screenName.'</a><span></span>
+                            <a href="">'.$search->screenName.'</a>
+                            <span></span>
                           </div>
                          <div class="nav-right-down-right-body">
                         </div>
                     </div>
                 </div> 
-            </li>
-            </ul>
-            </div> 
-    ';
+            </li>';
           }
         }
     }
