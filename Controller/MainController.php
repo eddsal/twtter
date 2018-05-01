@@ -125,18 +125,19 @@ class MainController extends BaseController
         $getFromU = new User();
         $search = $getFromU->getUser($_SESSION['id']);
         $result = $getFromU->search($search);
-        
+       
         echo '<div class="nav-right-down-wrap"><ul> ';
     
         foreach($result as $search){
+           
             echo '  <li>
                       <div class="nav-right-down-inner">
                         <div class="nav-right-down-left">
-                          <a href="."><img src="sa"></a>
+                          <a href="$user->screenName"><img src="'.$search->profileImage.' "></a>
                        </div>
                        <div class="nav-right-down-right">
                          <div class="nav-right-down-right-headline">
-                            <a href=""></a><span></span>
+                            <a href="">'.$search->screenName.'</a><span></span>
                           </div>
                          <div class="nav-right-down-right-body">
                         </div>

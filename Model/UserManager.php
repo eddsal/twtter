@@ -16,6 +16,7 @@ class User {
       
         $stmt->execute();
         $search =  $stmt->fetchAll(\PDO::FETCH_OBJ);
+
       
         return $search;
       
