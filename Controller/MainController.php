@@ -118,122 +118,7 @@ class MainController extends BaseController
         $data = $getFromU->getUser($_SESSION['id']);
         return $this->render('profile.html.twig', $data);
     }
-    public function tweetAction(){
-        if(isset($_POST['tweetBtn'])){
-            $tweetId='';
-            $retweetId=0;
-            $retweetBy=0;
-            $likeCount=0;
-            $retweetCount=0;
-            $postedOn= date("Y-m-d H:i:s");
-            $retweetMsg='';
-            $tweetImage = '';
-            $getFromU = new User();
-            $data = $getFromU->getUser($_SESSION['id']);
-            $id = $_SESSION['id'];
-            $status = $_POST['status'];
-            if(strlen($status) > 140){
-                $data['error']="text too long";
-                return $this->render('profile.html.twig', $data);
-            }if(empty($status)){
-                $data['error']= "To Tweet, you should type or insert an image";
-                return $this->render('profile.html.twig', $data);
-            } else {
-              $lolo =$getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
-                     //displaying tweets
-              $getFromU = new Tweet();
-              $tweet =$getFromU->tweets($tweets);
-              
-        //   foreach($tweets as $tweet){
-        //       echo '<div class="all-tweet">
-        //       <div class="t-show-wrap">
-        //           <div class="t-show-inner">
-        //               <!-- this div is for retweet icon 
-        //           <div class="t-show-banner">
-        //               <div class="t-show-banner-inner">
-        //                   <span><i class="fa fa-retweet" aria-hidden="true"></i></span><span>Screen-Name Retweeted</span>
-        //               </div>
-        //           </div>
-                 
-        //               <div class="t-show-popup">
-        //                   <div class="t-show-head">
-        //                       <div class="t-show-img">
-        //                           <img src="PROFILE-IMAGE" />
-        //                       </div>
-        //                       <div class="t-s-head-content">
-        //                           <div class="t-h-c-name">
-        //                               <span>
-        //                                   <a href="PROFILE-LINK">SCREEN-NAME</a>
-        //                               </span>
-        //                               <span>@USERNAMAE</span>
-        //                               <span>POSTED-ON</span>
-        //                           </div>
-        //                           <div class="t-h-c-dis">
-        //                               STATUS
-        //                           </div>
-        //                       </div>
-        //                   </div>
-                         
-        //                   <div class="t-show-body">
-        //                       <div class="t-s-b-inner">
-        //                           <div class="t-s-b-inner-in">
-        //                               <img src="TWEET-IMAGE" class="imagePopup" />
-        //                           </div>
-        //                       </div>
-        //                   </div>
-                         
-        //               </div>
-        //               <div class="t-show-footer">
-        //                   <div class="t-s-f-right">
-        //                       <ul>
-        //                           <li>
-        //                               <button>
-        //                                   <a href="#">
-        //                                       <i class="fa fa-share" aria-hidden="true"></i>
-        //                                   </a>
-        //                               </button>
-        //                           </li>
-        //                           <li>
-        //                               <button>
-        //                                   <a href="#">
-        //                                       <i class="fa fa-retweet" aria-hidden="true"></i>
-        //                                   </a>
-        //                               </button>
-        //                           </li>
-        //                           <li>
-        //                               <button>
-        //                                   <a href="#">
-        //                                       <i class="fa fa-heart-o" aria-hidden="true"></i>
-        //                                   </a>
-        //                               </button>
-        //                           </li>
-        //                           <li>
-        //                               <a href="#" class="more">
-        //                                   <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-        //                               </a>
-        //                               <ul>
-        //                                   <li>
-        //                                       <label class="deleteTweet">Delete Tweet</label>
-        //                                   </li>
-        //                               </ul>
-        //                           </li>
-        //                       </ul>
-        //                   </div>
-        //               </div>
-        //           </div>
-        //       </div>
-        //   </div>';
-            
-    
-                return $this->render('profile.html.twig', $data);
-             
-        }
-           
-        
-          
-        };    
-          
-  } 
+ 
      
     public function searchaction(){
     if(isset($_POST['search'])){
@@ -266,10 +151,16 @@ class MainController extends BaseController
     }
     public function settingsAction(){
         $getFromU = new User();
+        $getFromT = new Tweet();
+      
         $data = $getFromU->getUser($_SESSION['id']);
+        $dataa = $getFromT->tweetByid();  
+       
         //var_dump('<pre>',$data);
       //  var_dump('<pre>',$data['id']);
         return $this->render('pEdit.html.twig',$data);
+        return $this->render('pEdit.html.twig',$dataa);
+
 
 
     }
@@ -298,6 +189,43 @@ class MainController extends BaseController
     }
     return $this->render('pEdit.html.twig',$data);
      }
+     
+public function tweetAction(){
+    if(isset($_POST['tweetBtn'])){
+        $tweetId='';
+        $retweetId=0;
+        $retweetBy=0;
+        $likeCount=0;
+        $retweetCount=0;
+        $postedOn= date("Y-m-d H:i:s");
+        $retweetMsg='';
+        $tweetImage = '';
+        $getFromU = new User();
+        $data = $getFromU->getUser($_SESSION['id']);
+        $id = $_SESSION['id'];
+        $status = $_POST['status'];
+        if(strlen($status) > 140){
+            $data['error']="text too long";
+            return $this->render('profile.html.twig', $data);
+        }if(empty($status)){
+            $data['error']= "To Tweet, you should type or insert an image";
+            return $this->render('profile.html.twig', $data);
+        } else {
+          $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
+                 //displaying tweets
+          $getFromT = new Tweet();
+          $data =$getFromT->tweets();
+          
+
+          return $this->render('profile.html.twig',$data[0]);
+          
+    }
+       
+    
+      
+    };    
+      
+}
 
 
 }

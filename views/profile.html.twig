@@ -133,8 +133,8 @@
 						 	</div>
 						 </div>
 						 <div class="tweet-body">
-						 <form method="post"  action="?action=tweet" enctype="multipart/form-data">
-							<textarea class="status" name="status" placeholder="Type Something here!" rows="4" cols="50"></textarea>
+						 <form method="post" id="myForm" action="?action=tweet" enctype="multipart/form-data">
+							<textarea class="status"   name="status" placeholder="Type Something here!" rows="4" cols="50"></textarea>
  						 	<div class="hash-box">
 						 		<ul>
   						 		</ul>
@@ -152,7 +152,7 @@
 						 	<div class="t-fo-right">
 						 		<span id="count">140</span>
 								 
-						 		<input type="submit"  name="tweetBtn" value="tweet"/>
+						 		<input type="submit" id="tweetBtn"  name="tweetBtn" value="tweet"/>
 								 
 				 		</form>
 						 
@@ -160,89 +160,13 @@
 						 </div>
 					</div>
 				</div>
-					<div class="all-tweet">
-            <div class="t-show-wrap">
-                <div class="t-show-inner">
-                <div class="t-show-banner">
-                    <div class="t-show-banner-inner">
-                        <span><i class="fa fa-retweet" aria-hidden="true"></i></span><span>Screen-Name Retweeted</span>
-                    </div>
-                </div>
-               
-                    <div class="t-show-popup">
-                        <div class="t-show-head">
-                            <div class="t-show-img">
-                                <img src="{{profileImage}}" />
-                            </div>
-                            <div class="t-s-head-content">
-                                <div class="t-h-c-name">
-                                    <span>
-                                        <a href="PROFILE-LINK">{{screenName}}</a>
-                                    </span>
-                                    <span>@USERNAMAE</span>
-                                    <span>{{postedOn}}</span>
-                                </div>
-                                <div class="t-h-c-dis">
-										{{status}}
-                                </div>
-                            </div>
-                        </div>
-                       
-                        <div class="t-show-body">
-                            <div class="t-s-b-inner">
-                                <div class="t-s-b-inner-in">
-                                    <img src="TWEET-IMAGE" class="imagePopup" />
-                                </div>
-                            </div>
-                        </div>
-                       
-                    </div>
-                    <div class="t-show-footer">
-                        <div class="t-s-f-right">
-                            <ul>
-                                <li>
-                                    <button>
-                                        <a href="#">
-                                            <i class="fa fa-share" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button>
-                                        <a href="#">
-                                            <i class="fa fa-retweet" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button>
-                                        <a href="#">
-                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                        </a>
-                                    </button>
-                                </li>
-                                <li>
-                                    <a href="#" class="more">
-                                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <label class="deleteTweet">Delete Tweet</label>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>'			
-				<!--TWEET WRAP END-->
+			
+          			
+						<!--TWEET WRAP END-->
 				 <div class="tweets"> 	
-				 {{data}}			 
- 				 </div>
- 				
-
+			
+					{% embed "tweets.html.twig" %}{% endembed %}
+ 				 </div> 
 		    	<div class="loading-div">
 		    		<img id="loader" src="assets/images/loading.svg" style="display: none;"/> 
 		    	</div>

@@ -1,33 +1,22 @@
-<?php
-namespace TweetManager;
+{% extends 'layout.html.twig' %}
+{% block content %}
 
-use Cool\DBManager;
-use UserManager\User;
-
-class Tweet extends User {
-
-    public function tweets(){
-        $dbManager = DBManager::getInstance();
-        $pdo = $dbManager->getPdo();
-        $stmt =$pdo->prepare("SELECT * FROM `tweets`,`users` WHERE `tweetBy` = `id`");
-        $stmt->execute();
-        $tweets = $stmt->fetchAll();
-        $box ='<div class="all-tweet">
+<div class="all-tweet">
         <div class="t-show-wrap">	
          <div class="t-show-inner">
             <div class="t-show-popup">
                 <div class="t-show-head">
                     <div class="t-show-img">
-                        <img src="PROFILE-IMAGE"/>
+                        <img src="{{profileImage}}"/>
                     </div>
                     <div class="t-s-head-content">
                         <div class="t-h-c-name">
-                            <span><a href="PROFILE-LINK">SCREEN-NAME</a></span>
-                            <span>@USERNAMAE</span>
-                            <span>POSTED-ON</span>
+                            <span><a href="PROFILE-LINK">{{screenName}}</a></span>
+                            <span>{{username}}</span>
+                            <span>{{postedOn}}</span>
                         </div>
                         <div class="t-h-c-dis">
-                            STATUS
+                            {{status}}
                         </div>
                     </div>
                 </div>
@@ -58,26 +47,6 @@ class Tweet extends User {
             </div>
         </div>
         </div>
-        </div>';
-
-            foreach($tweets as $tweet){
-              echo $box;
-            }
-           
-            return $tweets;
-           
-
-    }
-    public function tweetByid(){
-        $dbManager = DBManager::getInstance();
-        $pdo = $dbManager->getPdo();
-        $stmt =$pdo->prepare("SELECT * FROM `tweets` WHERE `tweetBy` = {$_SESSION['id']} ");
-      
-        $stmt->execute();
-        $tweets = $stmt->fetchAll();
+        </div>
         
-        return $tweets;
-    }
-
-   
-}
+	{% endblock %}  
