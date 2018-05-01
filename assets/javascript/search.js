@@ -5,6 +5,11 @@ $(function(){
             $('.search-result').html(data);
 
         })
+       $(window).click(function(data){
+        $('.search-result').html('');
+
+       })
+
     })
 
 
