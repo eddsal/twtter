@@ -153,12 +153,12 @@ class MainController extends BaseController
         $getFromT = new Tweet();
       
         $data = $getFromU->getUser($_SESSION['id']);
-        $dataa = $getFromT->tweetByid();  
+        $getFromT = new Tweet();
+        $dd =['tweet'=>$getFromT->tweetByid()];
        
         //var_dump('<pre>',$data);
       //  var_dump('<pre>',$data['id']);
-        return $this->render('pEdit.html.twig',$data);
-        return $this->render('pEdit.html.twig',$dataa);
+        return $this->render('pEdit.html.twig',$data + $dd);
 
 
 
@@ -200,24 +200,23 @@ public function tweetAction(){
         $retweetMsg='';
         $tweetImage = '';
         $getFromU = new User();
-        $data = $getFromU->getUser($_SESSION['id']);
+        $data =$getFromU->getUser($_SESSION['id']);
         $id = $_SESSION['id'];
         $status = $_POST['status'];
+        $getFromT = new Tweet();
+        $dd =['tweet'=>$getFromT->tweets()];
         if(strlen($status) > 140){
             $data['error']="text too long";
-            return $this->render('profile.html.twig', $data);
+            return $this->render('profile.html.twig',$data + $dd);
         }if(empty($status)){
             $data['error']= "To Tweet, you should type or insert an image";
-            return $this->render('profile.html.twig', $data);
+            return $this->render('profile.html.twig',$data + $dd);
         } else {
+            $data =$getFromU->getUser($_SESSION['id']);
           $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
-                 //displaying tweets
-          $getFromT = new Tweet();
-          $data =$getFromT->tweets();
-          
+                 //displaying tweet
+          return $this->render('profile.html.twig',$data + $dd);
 
-          return $this->render('profile.html.twig',$data[0]);
-          
     }
        
     
