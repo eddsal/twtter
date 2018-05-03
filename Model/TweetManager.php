@@ -27,6 +27,14 @@ class Tweet extends User {
       //  $tweets=array_column($tweets,'status');
         return $tweets;
     }
+    public function deleteTweet(){
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $stmt = $pdo->prepare("DELETE `status` FROM `tweets` WHERE  `tweetBy` = {$_SESSION['id']} ");
+        
+        $stmt->execute();
+
+    }
 
 
 

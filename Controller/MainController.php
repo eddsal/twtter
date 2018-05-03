@@ -45,8 +45,10 @@ class MainController extends BaseController
                 $userManager = new User();
                 $user = $userManager->getUserByUsername($email);
                 $userManager->login($email, $data['id']);
+                $getFromT = new Tweet();
+                $twts =['tweet'=>$getFromT->tweets()];
 
-              return $this->render('profile.html.twig',$data );
+              return $this->render('profile.html.twig',$data + $twts );
         } 
      }
   }
@@ -114,7 +116,10 @@ class MainController extends BaseController
     public function profileAction(){
         $getFromU = new User();
         $data = $getFromU->getUser($_SESSION['id']);
-        return $this->render('profile.html.twig', $data);
+
+        $getFromT = new Tweet();
+        $twts =['tweet'=>$getFromT->tweets()];
+        return $this->render('profile.html.twig', $data + $twts);
     }
  
      
@@ -173,22 +178,22 @@ class MainController extends BaseController
          $data = $getFromU->getUser($_SESSION['id']);
          $id=$_SESSION['id'];
          $getFromU->update('users', $id,array('screenName' => $screenName,'bio' => $bio, 'country' => $country,'website' => $website));   
-    }
-    if(isset($_FILES['profileImage'])){
-        $profileImage = $_FILES['profileImage'];
-        $root =$getFromU->uploadImage($_FILES['profileImage']);
-        $getFromU->update('users', $id, array('profileImage'=> $root));   
-    }
-    if(isset($_FILES['profileCover'])){
-        $profileCover = $_FILES['profileCover'];
-        $root =$getFromU->uploadImage($_FILES['profileCover']);
-        $getFromU->update('users', $id, array('profileCover'=> $root));   
-    }
-    return $this->render('pEdit.html.twig',$data);
+        }
+        if(isset($_FILES['profileImage'])){
+            $profileImage = $_FILES['profileImage'];
+            $root =$getFromU->uploadImage($_FILES['profileImage']);
+            $getFromU->update('users', $id, array('profileImage'=> $root));   
+        }
+        if(isset($_FILES['profileCover'])){
+            $profileCover = $_FILES['profileCover'];
+            $root =$getFromU->uploadImage($_FILES['profileCover']);
+            $getFromU->update('users', $id, array('profileCover'=> $root));   
+        }   
+         return $this->render('pEdit.html.twig',$data);
      }
      
-public function tweetAction(){
-    if(isset($_POST['tweetBtn'])){
+    public function tweetAction(){
+        if(isset($_POST['tweetBtn'])){
         $tweetId='';
         $retweetId=0;
         $retweetBy=0;
@@ -212,17 +217,22 @@ public function tweetAction(){
             return $this->render('profile.html.twig',$data + $dd);
         } else {
             $data =$getFromU->getUser($_SESSION['id']);
-          $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
+           $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
                  //displaying tweet
           return $this->render('profile.html.twig',$data + $dd);
 
+           } 
+        };
+        if(isset($_POST['more'])){
+            die();
+                    
     }
+
+ 
        
+     
     
-      
-    };    
-      
-}
+   }  
 
 
 }
