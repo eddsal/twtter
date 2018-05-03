@@ -40,7 +40,7 @@ class User {
     {
         $_SESSION['email'] = $email;
         $_SESSION['id'] = $id;
-        var_dump( $_SESSION['id']);
+      
     }
     //insertin user data into my database + default photo and cover
     public function register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){

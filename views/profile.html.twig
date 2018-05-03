@@ -171,16 +171,16 @@
 	<div class="t-show-popup">
 		<div class="t-show-head">
 			<div class="t-show-img">
-				<img src="{{profileImage}}"/>
+				<img src="{{tweets['profileImage']}}"/>
 			</div>
 			<div class="t-s-head-content">
 				<div class="t-h-c-name">
-					<span><a href="PROFILE-LINK">{{screenName}}</a></span>
+					<span><a href="PROFILE-LINK">{{tweets['screenName']}}</a></span>
 					<span>@USERNAMAE</span>
 					<span>{{postedOn}}</span>
 				</div>
 				<div class="t-h-c-dis">
-					{{status}}
+					{{tweets['status']}}
 				</div>
 			</div>
 		</div>
@@ -188,7 +188,7 @@
 		<div class="t-show-body">
 		  <div class="t-s-b-inner">
 		   <div class="t-s-b-inner-in">
-		     <img src="TWEET-IMAGE" class="imagePopup"/>
+		     <img src="" class="imagePopup"/>
 		   </div>
 		  </div>
 		</div>

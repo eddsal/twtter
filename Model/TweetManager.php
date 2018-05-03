@@ -12,8 +12,10 @@ class Tweet extends User {
         $stmt =$pdo->prepare("SELECT * FROM `tweets`,`users` WHERE `tweetBy` = `id`");
         $stmt->execute();
         $tweets = $stmt->fetchAll();
-           
-            return $tweets;  
+    
+            return $tweets;
+    
+            
     }
     public function tweetByid(){
         $dbManager = DBManager::getInstance();
@@ -22,7 +24,7 @@ class Tweet extends User {
       
         $stmt->execute();
         $tweets = $stmt->fetchAll();
-        
+      //  $tweets=array_column($tweets,'status');
         return $tweets;
     }
 

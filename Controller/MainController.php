@@ -41,13 +41,11 @@ class MainController extends BaseController
                 return $this->render('home.html.twig', $data);
             }       
             if (true == $data) {
-              //  var_dump($data['id']);
-                //die;
-               
+          
                 $userManager = new User();
                 $user = $userManager->getUserByUsername($email);
                 $userManager->login($email, $data['id']);
-              //  $logManager->writeToLog('connect to account with the id ' . $user['id'], false);
+
               return $this->render('profile.html.twig',$data );
         } 
      }
@@ -205,6 +203,7 @@ public function tweetAction(){
         $status = $_POST['status'];
         $getFromT = new Tweet();
         $dd =['tweet'=>$getFromT->tweets()];
+      
         if(strlen($status) > 140){
             $data['error']="text too long";
             return $this->render('profile.html.twig',$data + $dd);
