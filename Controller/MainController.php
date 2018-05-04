@@ -119,7 +119,11 @@ class MainController extends BaseController
 
         $getFromT = new Tweet();
         $twts =['tweet'=>$getFromT->tweets()];
-        return $this->render('profile.html.twig', $data + $twts);
+        $count=$getFromT->countTweet($_SESSION['id']);
+        // var_dump($count);
+        // die();
+      
+        return $this->render('profile.html.twig', $data + $twts +$count);
     }
  
      

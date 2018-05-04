@@ -1,4 +1,6 @@
+
 {% extends 'layout.html.twig' %}
+
 {% block content %}
 <div class="wrapper">
 	<!-- header wrapper -->
@@ -11,14 +13,16 @@
 			<ul>
 				<li><a href="?action=profile"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
 				<li><a href="i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notification</a></li>
-				<l><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
+				<li><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
 			</ul>
 		</div>
 		<!-- nav left ends-->
 		<div class="nav-right">
 			<ul>
-				<li><input type="text" placeholder="Search" class="searchm"/><i class="fa fa-search" aria-hidden="true"></i>
+				<li><input type="text" placeholder="Search" class="searchm"/>
+				<i class="fa fa-search" aria-hidden="true"></i>
 				<div class="search-result">
+				
 					 			
 				</div></li>
 				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{profileImage}}"/></label>
