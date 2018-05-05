@@ -114,16 +114,15 @@ class MainController extends BaseController
     }
 
     public function profileAction(){
+        
         $getFromU = new User();
         $data = $getFromU->getUser($_SESSION['id']);
 
         $getFromT = new Tweet();
         $twts =['tweet'=>$getFromT->tweets()];
         $count=$getFromT->countTweet($_SESSION['id']);
-        // var_dump($count);
-        // die();
-      
         return $this->render('profile.html.twig', $data + $twts +$count);
+        
     }
  
      
@@ -132,7 +131,6 @@ class MainController extends BaseController
         $getFromU = new User();
         $search = $getFromU->getUser($_SESSION['id']);
         $result = $getFromU->search($search);
-       
         echo '<div class="nav-right-down-wrap"><ul> ';
     
         foreach($result as $search){
@@ -162,10 +160,12 @@ class MainController extends BaseController
         $data = $getFromU->getUser($_SESSION['id']);
         $getFromT = new Tweet();
         $dd =['tweet'=>$getFromT->tweetByid()];
+        $count=$getFromT->countTweet($_SESSION['id']);
        
         //var_dump('<pre>',$data);
       //  var_dump('<pre>',$data['id']);
-        return $this->render('pEdit.html.twig',$data + $dd);
+        return $this->render('pEdit.html.twig',$data + $dd + $count);
+
 
 
 
@@ -178,9 +178,10 @@ class MainController extends BaseController
          $bio = $_POST['bio'];
          $country = $_POST['country'];
          $website = $_POST['website'];
-         $getFromU = new User();
+      
          $data = $getFromU->getUser($_SESSION['id']);
          $id=$_SESSION['id'];
+      
          $getFromU->update('users', $id,array('screenName' => $screenName,'bio' => $bio, 'country' => $country,'website' => $website));   
         }
         if(isset($_FILES['profileImage'])){
@@ -193,7 +194,10 @@ class MainController extends BaseController
             $root =$getFromU->uploadImage($_FILES['profileCover']);
             $getFromU->update('users', $id, array('profileCover'=> $root));   
         }   
-         return $this->render('pEdit.html.twig',$data);
+        $getFromT = new Tweet();
+           $dd =['tweet'=>$getFromT->tweetByid()];
+         $count=$getFromT->countTweet($_SESSION['id']);
+         return $this->render('pEdit.html.twig',$data+$dd+$count);
      }
      
     public function tweetAction(){
@@ -212,31 +216,64 @@ class MainController extends BaseController
         $status = $_POST['status'];
         $getFromT = new Tweet();
         $dd =['tweet'=>$getFromT->tweets()];
+           $count=$getFromT->countTweet($_SESSION['id']);
       
         if(strlen($status) > 140){
             $data['error']="text too long";
-            return $this->render('profile.html.twig',$data + $dd);
+            return $this->render('profile.html.twig',$data + $dd + $count);
         }if(empty($status)){
             $data['error']= "To Tweet, you should type or insert an image";
-            return $this->render('profile.html.twig',$data + $dd);
+            return $this->render('profile.html.twig',$data + $dd + $count);
         } else {
             $data =$getFromU->getUser($_SESSION['id']);
+          
            $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
                  //displaying tweet
-          return $this->render('profile.html.twig',$data + $dd);
+          return $this->render('profile.html.twig',$data + $dd + $count);
 
            } 
         };
-        if(isset($_POST['more'])){
-            die();
-                    
+        
+   }  
+
+   public function deleteAction(){
+        if(isset($_POST['deleteTweet'])){
+         $getFromT = new Tweet;
+         $delete = $getFromT->deleteTweet();
+
+         var_dump($delete);
+         die();
+
+        }
+   }
+   public function retweetAction(){
+    if(isset($_POST['showPopup'])){
+      die();
+            $userId =$_SESSION['id'];
+            $tweetId =$_POST['showPopup'];
+            $getId= $_POST['id'];
+           $getFromT = new Tweet();
+           $retweet =$getFromT->getRetweet($tweetId);
+                
+           
+       }
+   
+   }
+   public function likeAction(){
+    if(isset($_POST['like'])){
+
+        $userId =$_SESSION['id'];
+        $tweetId =$_POST['like'];
+      //  $getId= $_POST['id'];
+       $getFromT = new Tweet();
+       $like =$getFromT->like($userId,$tweetId);
+
+        
+     
+      
     }
 
- 
-       
-     
-    
-   }  
+   }
 
 
 }

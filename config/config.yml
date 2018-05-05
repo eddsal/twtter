@@ -9,5 +9,8 @@ routes:
     settings : "Main:settings"
     profile: "Main:profile"
     update: "Main:update"
+    delete: "Main:delete"
+    retweet: "Main:retweet"
+    like: "Main:like"
  
 

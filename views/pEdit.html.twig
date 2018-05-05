@@ -14,6 +14,7 @@
 				<li><a href="?action=profile"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
 				<li><a href="i/notifications"><i class="fa fa-bell" aria-hidden="true"></i>Notification</a></li>
 				<li><i class="fa fa-envelope" aria-hidden="true"></i>Messages</li>
+				<script src="assets/javascript/search.js"></script> 
 			</ul>
 		</div>
 		<!-- nav left ends-->
@@ -95,7 +96,7 @@
 						TWEETS
 					</div>
 					<div class="n-bottom">
-						{{tweets}}
+						{{totalTweets}}
 					</div>
 				</a>
 			</li>
@@ -308,7 +309,7 @@
 					<li>
 					<a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
 					<ul> 
-					  <li><label class="deleteTweet">Delete Tweet</label></li>
+					  <li><label name="deleteTweet"class="deleteTweet">Delete Tweet</label></li>
 					</ul>
 				</li>
 			</ul>

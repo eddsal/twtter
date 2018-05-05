@@ -1,6 +1,10 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
 
+<script src="assets/javascript/search.js"></script> 
+
+
+
 
 
 <div class="wrapper">
@@ -54,7 +58,7 @@
 </div><!-- nav container ends -->
 
 </div><!-- header wrapper end -->
-<script src="assets/javascript/search.js"></script> 
+
 
 <!---Inner wrapper-->
 <div class="inner-wrapper">
@@ -94,7 +98,7 @@
 								TWEETS
 							</div>
 							<div class="num-body">
-								s{{totalTweets}}
+								{{totalTweets}}
 							</div>
 						</div>
 						<div class="num-box">
@@ -133,7 +137,7 @@
 						 	</div>
 						 </div>
 						 <div class="tweet-body">
-						 <form method="post" id="myForm" action="?action=tweet" enctype="multipart/form-data">
+					<form method="post" id="myForm" action="?action=tweet" enctype="multipart/form-data">
 							<textarea class="status"   name="status" placeholder="Type Something here!" rows="4" cols="50"></textarea>
  						 	<div class="hash-box">
 						 		<ul>
@@ -163,8 +167,10 @@
 			
           			
 						<!--TWEET WRAP END-->
-				 <div class="tweets"> 	
+				 <div class="tweets"> 
+				 
  	{% for tweets in tweet %} 
+
 			<div class="all-tweet">
 <div class="t-show-wrap">	
  <div class="t-show-inner">
@@ -195,32 +201,32 @@
 		
 	</div>
 	<div class="t-show-footer">
+	 {# <form method="post" > #}
+	
 		<div class="t-s-f-right">
 			<ul> 
 				<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
-				<li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
-				<li><button><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></button></li>
-					{# <li>
-					<a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-					<ul> 
-					  <li><label class="deleteTweet">Delete Tweet</label></li>
-					</ul>
-				</li> #}
+				<li><button  name="retweet"class="retweet" data-tweet={{tweets['tweeID']}} data-user={{tweets['tweetBy']}} ><i class="fa fa-retweet" aria-hidden="true"></i><span class='retweetsCount'></span></button></li>
+				<li><button  class="likeBtn" data-tweet={{tweets['tweetID']}} data-user={{tweets['tweetBy']}}><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likeCount"></span></button></li>
+		
 			</ul>
 		</div>
+
 	</div>
 </div>
 </div>
 </div>
+
 			   {% endfor %}
               </div>
  				 </div> 
 		    	<div class="loading-div">
 		    		<img id="loader" src="assets/images/loading.svg" style="display: none;"/> 
 		    	</div>
-				<div class="popupTweet"></div>
-				
- 			
+				<div class="popupTweet">
+				{% if retweet is defined  %}
+
+ 			{% endif %}
 			</div>
 		</div>
 
