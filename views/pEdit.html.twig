@@ -303,13 +303,13 @@
 	<div class="t-show-footer">
 		<div class="t-s-f-right">
 			<ul> 
-				<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
-				<li><button><a href="#"><i class="fa fa-retweet" aria-hidden="true"></i></a></button></li>
-				<li><button><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a></button></li>
+			<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
+				<li><button  name="retweet"class="retweet" data-tweet={{tweets['tweeID']}} data-user={{tweets['tweetBy']}} ><i class="fa fa-retweet" aria-hidden="true"></i><span class='retweetsCount'></span></button></li>
+				<li><button  class="likeBtn" data-tweet={{tweets['tweetID']}} data-user={{tweets['tweetBy']}}><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likeCount"></span></button></li>
 					<li>
 					<a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
 					<ul> 
-					  <li><label name="deleteTweet"class="deleteTweet">Delete Tweet</label></li>
+					  <li><label class="deleteTweet"  data-tweet={{tweets['tweetID']}} data-user={{tweets['tweetBy']}} name="deleteTweet"class="deleteTweet">Delete Tweet</label></li>
 					</ul>
 				</li>
 			</ul>

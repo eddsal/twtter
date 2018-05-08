@@ -23,6 +23,20 @@ class User {
         return $search;
       
        }
+       public function searchProfile($searchP){
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users`");
+      
+        $stmt->execute();
+        $searchP =  $stmt->fetchAll();
+
+
+
+      
+        return $searchP;
+      
+       }
         //check if we have the user mail and password in the db
     public function checklogin($email, $password){
         $dbm = DBManager::getInstance();

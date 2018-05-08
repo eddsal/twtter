@@ -12,5 +12,6 @@ routes:
     delete: "Main:delete"
     retweet: "Main:retweet"
     like: "Main:like"
+    searchprofile: "Main:searchProfile"
  
 

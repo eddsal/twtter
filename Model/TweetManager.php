@@ -31,13 +31,14 @@ class Tweet extends User {
     public function deleteTweet(){
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $stmt = $pdo->prepare("DELETE `status` FROM `tweets` WHERE  `tweetBy` = {$_SESSION['id']} ");
-        $stmt->execute();
-        $delete = $stmt->fetchAll();
+        $stmt = $pdo->prepare(" DELETE * FROM `tweets`");
+        
+        $ddelete=$stmt->execute();
+      
+        var_dump($ddelete);
+       // $delete = $stmt->fetchAll();
             
     
-        var_dump($delete);
-        die();
    
     }
 
@@ -71,7 +72,6 @@ class Tweet extends User {
         $stmt->bindParam(":tweetId",$tweetId);
         $stmt->execute();
      
-
         $like = $pdo->prepare("INSERT INTO `likes` (`likeBy` ,`likeOn`) VALUES({$_SESSION['id']} , $tweetId )");
         $like->execute();
 

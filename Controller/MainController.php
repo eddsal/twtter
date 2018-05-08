@@ -127,18 +127,21 @@ class MainController extends BaseController
  
      
     public function searchaction(){
+      
     if(isset($_POST['search'])){
         $getFromU = new User();
         $search = $getFromU->getUser($_SESSION['id']);
         $result = $getFromU->search($search);
+       
         echo '<div class="nav-right-down-wrap"><ul> ';
     
         foreach($result as $search){
            
-            echo ' <li>
-                      <div class="nav-right-down-inner">
+            echo '
+                        <li>
+                          <div class="nav-right-down-inner">
                         <div class="nav-right-down-left">
-                          <a href=""><img src="'.$search->profileImage.'"></a>
+                          <a href="?action=searchprofile" ><img src="'.$search->profileImage.'"></a>
                        </div>
                        <div class="nav-right-down-right">
                          <div class="nav-right-down-right-headline">
@@ -151,7 +154,21 @@ class MainController extends BaseController
                 </div> 
             </li>';
           }
+          
         }
+     
+      
+       
+    }
+    public function searchProfileaction(){
+        $getFromU = new User();
+        $search = $getFromU->getUser($_SESSION['id']);
+        $result =['result'=>$getFromU->searchProfile($search)];
+
+        // var_dump('<pre>',['result']['id']);
+        // die();
+    
+        return $this->render('searchprofile.html.twig',$result);
     }
     public function settingsAction(){
         $getFromU = new User();
@@ -165,6 +182,7 @@ class MainController extends BaseController
         //var_dump('<pre>',$data);
       //  var_dump('<pre>',$data['id']);
         return $this->render('pEdit.html.twig',$data + $dd + $count);
+     //   return $this->render('searchprofile.html.twig',$data + $dd + $count);
 
 
 
@@ -240,9 +258,6 @@ class MainController extends BaseController
         if(isset($_POST['deleteTweet'])){
          $getFromT = new Tweet;
          $delete = $getFromT->deleteTweet();
-
-         var_dump($delete);
-         die();
 
         }
    }

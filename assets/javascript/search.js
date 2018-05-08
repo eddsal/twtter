@@ -4,6 +4,7 @@ window.onload = function () {
         var search = $(this).val();
         $.post('http://localhost/twtter/?action=search', {
             search: search
+           
         }, function (data) {
             $('.search-result').html(data);
         });
@@ -17,10 +18,11 @@ window.onload = function () {
         var tweetId = $(this).data('tweet');
         $.post('http://localhost/twtter/?action=delete', {
             deleteTweet: tweetId
-        }, function (data) {
-            $('.popupTweet').html(data);
-        })
+        });
     })
+
+
+
     //tweet action
     $('#tweetBtn').on('click', function () {
         var tweet = $(this).val();
