@@ -49,7 +49,7 @@
 </div>
 <!-- header wrapper end -->
 
-<!--Profile cover-->
+ 	
 <div class="profile-cover-wrap"> 
 	<div class="profile-cover-inner">
 		<div class="profile-cover-img">
@@ -65,7 +65,7 @@
 							TWEETS
 						</div>
 						<div class="n-bottom">
-							1
+							{{Tweet}}
 						</div>
 					</a>
 				</li>
@@ -120,7 +120,7 @@
 			<div class="profile-info-wrap">
 				<div class="profile-info-inner">
 					<div class="profile-img">
-						<img src="#"/>
+						<img src="{{result['profileImage']}}"/>
 					</div>	
 					<div class="profile-name-wrap">
 						<div class="profile-name">
@@ -219,4 +219,5 @@
 <!-- in wrappper ends-->
 
 </div><!-- ends wrapper -->
+
 {% endblock %}

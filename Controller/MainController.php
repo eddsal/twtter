@@ -163,10 +163,10 @@ class MainController extends BaseController
     public function searchProfileaction(){
         $getFromU = new User();
         $search = $getFromU->getUser($_SESSION['id']);
-        $result =['result'=>$getFromU->searchProfile($search)];
+        $result =$getFromU->searchProfile($search);
 
-        // var_dump('<pre>',['result']['id']);
-        // die();
+            var_dump('<pre>',$result['screenName']);
+           die();
     
         return $this->render('searchprofile.html.twig',$result);
     }
@@ -179,7 +179,7 @@ class MainController extends BaseController
         $dd =['tweet'=>$getFromT->tweetByid()];
         $count=$getFromT->countTweet($_SESSION['id']);
        
-        //var_dump('<pre>',$data);
+      //  var_dump('<pre>',$data);
       //  var_dump('<pre>',$data['id']);
         return $this->render('pEdit.html.twig',$data + $dd + $count);
      //   return $this->render('searchprofile.html.twig',$data + $dd + $count);
@@ -258,6 +258,7 @@ class MainController extends BaseController
         if(isset($_POST['deleteTweet'])){
          $getFromT = new Tweet;
          $delete = $getFromT->deleteTweet();
+        
 
         }
    }

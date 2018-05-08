@@ -31,15 +31,9 @@ class Tweet extends User {
     public function deleteTweet(){
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $stmt = $pdo->prepare(" DELETE * FROM `tweets`");
+        $stmt = $pdo->prepare("DELETE FROM tweets WHERE tweetID = {$_POST['deleteTweet']} ");
         
-        $ddelete=$stmt->execute();
-      
-        var_dump($ddelete);
-       // $delete = $stmt->fetchAll();
-            
-    
-   
+        $stmt->execute();
     }
 
     public function countTweet($id){

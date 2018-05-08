@@ -16,9 +16,12 @@ window.onload = function () {
     })
     $(document).on('click', '.deleteTweet', function () {
         var tweetId = $(this).data('tweet');
+      // $('.all-tweet').hide();
         $.post('http://localhost/twtter/?action=delete', {
             deleteTweet: tweetId
         });
+        
+        
     })
 
 
