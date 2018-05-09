@@ -23,18 +23,16 @@ class User {
         return $search;
       
        }
-       public function searchProfile($searchP){
+       public function searchProfile(){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users`");
       
-        $stmt->execute();
-        $searchP =  $stmt->fetchAll();
+         $stmt->execute();
+          $search =  $stmt->fetchAll();
 
-
-
-      
-        return $searchP;
+    //   var_dump('<pre>',$search);
+        return $search;
       
        }
         //check if we have the user mail and password in the db
@@ -126,22 +124,7 @@ class User {
         }
     }
 
-    // public function create($table,$fields = array()){
-    //     $columns = implode(',', array_keys($fields));
-    //     $values = ':'.implode(', :', array_keys($fields));
-    //     $sql = "INSERT INTO {$table}  ({$columns}) VALUES ({$values})";
-    //     $dbm = DBManager::getInstance();
-    //     $pdo = $dbm->getPdo();
-    //     if($stmt = $pdo->prepare($sql)){
-    //         foreach ($fields as $key => $data){
-    //             //$stmt->bindValue($columns);
-    //             $stmt->bindValue(':' .$key, $data);
-    //         }   
-    //         $stmt->execute();
-    //         return $stmt;
-            
-    //     }
-    // } 
+   
     public function create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();

@@ -161,14 +161,12 @@ class MainController extends BaseController
        
     }
     public function searchProfileaction(){
-        $getFromU = new User();
+        $getFromU = new User();     
         $search = $getFromU->getUser($_SESSION['id']);
-        $result =$getFromU->searchProfile($search);
-
-            var_dump('<pre>',$result['screenName']);
-           die();
-    
-        return $this->render('searchprofile.html.twig',$result);
+        $result =$getFromU->searchProfile();
+        //var_dump('<pre>',$search);
+        //die();
+        return $this->render('searchprofile.html.twig',$result + $search);
     }
     public function settingsAction(){
         $getFromU = new User();
@@ -179,7 +177,6 @@ class MainController extends BaseController
         $dd =['tweet'=>$getFromT->tweetByid()];
         $count=$getFromT->countTweet($_SESSION['id']);
        
-      //  var_dump('<pre>',$data);
       //  var_dump('<pre>',$data['id']);
         return $this->render('pEdit.html.twig',$data + $dd + $count);
      //   return $this->render('searchprofile.html.twig',$data + $dd + $count);

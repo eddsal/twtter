@@ -26,12 +26,12 @@
 				
 					 			
 				</div></li>
-				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{result['profileImage']}}"/></label>
+				<li class="hover"><label class="drop-label" for="drop-wrap1"><img src="{{profileImage}}"/></label>
 				<input type="checkbox" id="drop-wrap1">
 				<div class="drop-wrap">
 					<div class="drop-inner">
 						<ul>    
-							<li><a href="#">{{screenName }}</a></li>
+							<li><a href="#">{{screenName}}</a></li>
 							<li><a href="?action=settings">Settings</a></li>
 							<li><a href="?action=logout">Log out</a></li>
 						</ul>
@@ -72,7 +72,7 @@
 				 <li>
 					<a href="/following">
 						<div class="n-head">
-							{FOLLOWING}
+							FOLLOWING
 						</div>
 						<div class="n-bottom">
 							<span class="count-following">{{following}}</span>
@@ -120,14 +120,14 @@
 			<div class="profile-info-wrap">
 				<div class="profile-info-inner">
 					<div class="profile-img">
-						<img src="{{result['profileImage']}}"/>
+						<img src="{{search['profileImage']}}"/>
 					</div>	
 					<div class="profile-name-wrap">
 						<div class="profile-name">
 							<a href="#">{{screenName}}</a>
 						</div>
 						<div class="profile-tname">
-							@<span class="username">{{result[0]['screenName']}}</span>
+							@<span class="username">s{{result['screenName']}}</span>
 						</div>
 					</div>
 					<div class="profile-bio-wrap">

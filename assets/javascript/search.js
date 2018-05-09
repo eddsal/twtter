@@ -16,16 +16,12 @@ window.onload = function () {
     })
     $(document).on('click', '.deleteTweet', function () {
         var tweetId = $(this).data('tweet');
-      // $('.all-tweet').hide();
+    
         $.post('http://localhost/twtter/?action=delete', {
             deleteTweet: tweetId
         });
-        
-        
+
     })
-
-
-
     //tweet action
     $('#tweetBtn').on('click', function () {
         var tweet = $(this).val();
@@ -48,10 +44,6 @@ window.onload = function () {
             $('.popUpTweet').html(data);
         })
     })
-
-
-
-
 
     //like function
     $(document).on('click','.likeBtn',function(){
