@@ -87,7 +87,7 @@
 							<div><a href="{{screenName}}">{{ screenName }}</a></div>
                         
                            
-							<span><small><a href="{{username}}">@{{ username}}</a></small></span>
+							<span><small><a href="{{screenName}}">@{{screenName }}</a></small></span>
 						</div><!-- in b name end-->
 					</div><!-- info body name end-->
 				</div><!-- info in body end-->
@@ -137,8 +137,8 @@
 						 	</div>
 						 </div>
 						 <div class="tweet-body">
-					<form method="post" id="myForm" action="?action=tweet" enctype="multipart/form-data">
-							<textarea class="status"   name="status" placeholder="Type Something here!" rows="4" cols="50"></textarea>
+					{# <form method="post" id="myForm" action="?action=tweet" enctype="multipart/form-data"> #}
+							<textarea class="status" id="status"   name="status" placeholder="Type Something here!" rows="4" cols="50"></textarea>
  						 	<div class="hash-box">
 						 		<ul>
   						 		</ul>
@@ -158,7 +158,7 @@
 								 
 						 		<input type="submit" id="tweetBtn"  name="tweetBtn" value="tweet"/>
 								 
-				 		</form>
+				 		{# </form> #}
 						 
 						 	</div>
 						 </div>
@@ -167,7 +167,7 @@
 			
           			
 						<!--TWEET WRAP END-->
-				 <div class="tweets"> 
+				 <div name="tweets" class="tweets"> 
 				 
  	{% for tweets in tweet %} 
 
@@ -181,8 +181,8 @@
 			</div>
 			<div class="t-s-head-content">
 				<div class="t-h-c-name">
-					<span><a href="PROFILE-LINK">{{tweets['screenName']}}</a></span>
-					<span>@USERNAMAE</span>
+					<span><a href="?action=searchprofile">{{tweets['screenName']}}</a></span>
+					<span>@{{tweets['screenName']}}</span>
 					<span>{{tweets['postedOn']}}</span>
 				</div>
 				<div class="t-h-c-dis">

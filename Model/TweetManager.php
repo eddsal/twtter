@@ -51,11 +51,14 @@ class Tweet extends User {
     public function getRetweet($tweetId){
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $stmt = $pdo->prepare("SELECT * FROM `tweets`,`users` WHERE tweetID =:tweetID AND `tweetBy`= {$_SESSION['id']} ");
-        $stmt->bindParam(':tweetID',$tweetID);
-        $stmt->execute();
-        $retweet = $stmt->fetch();
+        $stmt = $pdo->prepare("SELECT * FROM `tweets`,`users` WHERE 'tweetID' = $tweetId AND tweetBy= {$_SESSION['id']} ");
+        $retweet =  $stmt->execute();
+      
+   
 
+        return $retweet;
+        var_dump($retweet);
+        // die();
        
 
     }

@@ -47,8 +47,9 @@ class MainController extends BaseController
                 $userManager->login($email, $data['id']);
                 $getFromT = new Tweet();
                 $twts =['tweet'=>$getFromT->tweets()];
+                $count=$getFromT->countTweet($_SESSION['id']);
 
-              return $this->render('profile.html.twig',$data + $twts );
+              return $this->render('profile.html.twig',$data + $twts + $count );
         } 
      }
   }
@@ -62,6 +63,7 @@ class MainController extends BaseController
         $bio='';
         $country='';
         $website='';
+        $id = $_SESSION['id'];
         if(isset($_POST['signup'])){
             $screenName=$_POST['screenName'];
             $email = $_POST['email'];
@@ -96,9 +98,10 @@ class MainController extends BaseController
                         'country'=>$country,
                         'website'=>$website
                         ];   
-                       // array($username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
                         $getFromU->register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
-                        return $this->render('profile.html.twig', $datau);    
+                        $getFromT = new Tweet();
+                        $twts =['tweet'=>$getFromT->tweets()];
+                        return $this->render('profile.html.twig', $datau + $twts);    
                     }
                 }
             }
@@ -155,16 +158,13 @@ class MainController extends BaseController
             </li>';
           }
           
-        }
-     
-      
-       
+        }   
     }
     public function searchProfileaction(){
         $getFromU = new User();     
         $search = $getFromU->getUser($_SESSION['id']);
-        $result =$getFromU->searchProfile();
-        //var_dump('<pre>',$search);
+        $result =['result'=>$getFromU->searchProfile($search)];
+        //var_dump('<pre>',$result);
         //die();
         return $this->render('searchprofile.html.twig',$result + $search);
     }
@@ -216,7 +216,7 @@ class MainController extends BaseController
      }
      
     public function tweetAction(){
-        if(isset($_POST['tweetBtn'])){
+        if(isset($_POST['tweet'])){
         $tweetId='';
         $retweetId=0;
         $retweetBy=0;
@@ -229,6 +229,7 @@ class MainController extends BaseController
         $data =$getFromU->getUser($_SESSION['id']);
         $id = $_SESSION['id'];
         $status = $_POST['status'];
+        
         $getFromT = new Tweet();
         $dd =['tweet'=>$getFromT->tweets()];
            $count=$getFromT->countTweet($_SESSION['id']);
@@ -261,12 +262,14 @@ class MainController extends BaseController
    }
    public function retweetAction(){
     if(isset($_POST['showPopup'])){
-      die();
             $userId =$_SESSION['id'];
             $tweetId =$_POST['showPopup'];
-            $getId= $_POST['id'];
+           // $getId= $_POST['id'];
            $getFromT = new Tweet();
            $retweet =$getFromT->getRetweet($tweetId);
+
+           var_dump($retweet);
+           die();
                 
            
        }
@@ -280,9 +283,6 @@ class MainController extends BaseController
       //  $getId= $_POST['id'];
        $getFromT = new Tweet();
        $like =$getFromT->like($userId,$tweetId);
-
-        
-     
       
     }
 

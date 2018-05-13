@@ -20,16 +20,28 @@ window.onload = function () {
         $.post('http://localhost/twtter/?action=delete', {
             deleteTweet: tweetId
         });
-
+        var del = document.querySelector('.all-tweet');
+        del.remove();
+       
     })
-    //tweet action
+    $('.status').keyup(function(){
+        $("#count").text((140 - $(this).val().length));
+          var count = $("#count").text((140 - $(this).val().length));
+
+       if( count  > 140){
+      alert("dsds");
+    }
+    })
     $('#tweetBtn').on('click', function () {
         var tweet = $(this).val();
+        var status = document.getElementById('status').value;
         $.post('http://localhost/twtter/?action=tweet', {
-            tweet: tweet
-        }, function () {
-            $('.tweets').html(tweets);
-            return false;
+            tweet: tweet,
+            status: status
+        }, function (tweets) {
+             $('.tweets').html(tweets);
+           return false;
+  
         });
     })
     //retweet action
@@ -40,8 +52,12 @@ window.onload = function () {
         $count = $counter.text();
         $button = $(this);
 
-        $.post('http://localhost/twtter/?action=retweet',{showPopup:tweetId, user:user},function(data){
-            $('.popUpTweet').html(data);
+        $.post('http://localhost/twtter/?action=retweet',{
+            showPopup:tweetId, 
+            user:user
+        },
+            function(data){
+            $('.tweet').html(data);
         })
     })
 
