@@ -10,22 +10,21 @@ class Tweet extends User {
     public function tweets(){
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $stmt =$pdo->prepare("SELECT * FROM `tweets`,`users` WHERE `tweetBy` = `id`");
+        $stmt =$pdo->prepare("SELECT * FROM `tweets`,`users` WHERE `tweetBy` = `id` ORDER BY tweetId DESC");
         $stmt->execute();
         $tweets = $stmt->fetchAll();
     
-            return $tweets;
-    
-            
+        return $tweets;
     }
-    public function tweetByid(){
-        $dbManager = DBManager::getInstance();
-        $pdo = $dbManager->getPdo();
-        $stmt =$pdo->prepare("SELECT * FROM `tweets` WHERE `tweetBy` = {$_SESSION['id']} ");
-      
-        $stmt->execute();
-        $tweets = $stmt->fetchAll();
-      //  $tweets=array_column($tweets,'status');
+
+        public function tweetByid(){
+            $dbManager = DBManager::getInstance();
+            $pdo = $dbManager->getPdo();
+            $stmt =$pdo->prepare("SELECT * FROM `tweets` WHERE `tweetBy` = {$_SESSION['id']} ");
+        
+            $stmt->execute();
+            $tweets = $stmt->fetchAll();
+        //  $tweets=array_column($tweets,'status');
         return $tweets;
     }
     public function deleteTweet(){
@@ -53,11 +52,9 @@ class Tweet extends User {
         $pdo = $dbManager->getPdo();
         $stmt = $pdo->prepare("SELECT * FROM `tweets`,`users` WHERE 'tweetID' = $tweetId AND tweetBy= {$_SESSION['id']} ");
         $retweet =  $stmt->execute();
-      
-   
-
+     
         return $retweet;
-        var_dump($retweet);
+      
         // die();
        
 

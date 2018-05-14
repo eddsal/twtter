@@ -181,7 +181,7 @@
 			</div>
 			<div class="t-s-head-content">
 				<div class="t-h-c-name">
-					<span><a href="?action=searchprofile">{{tweets['screenName']}}</a></span>
+					<span><a href="?action=searchprofile&amp;id={{ tweets['id'] }}">{{tweets['screenName']}}</a></span>
 					<span>@{{tweets['screenName']}}</span>
 					<span>{{tweets['postedOn']}}</span>
 				</div>
@@ -207,6 +207,8 @@
 			<ul> 
 				<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
 				<li><button  name="retweet"class="retweet" data-tweet={{tweets['tweeID']}} data-user={{tweets['tweetBy']}} ><i class="fa fa-retweet" aria-hidden="true"></i><span class='retweetsCount'></span></button></li>
+   		
+
 				<li><button  class="likeBtn" data-tweet={{tweets['tweetID']}} data-user={{tweets['tweetBy']}}><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likeCount"></span></button></li>
 		
 			</ul>
@@ -224,9 +226,7 @@
 		    		<img id="loader" src="assets/images/loading.svg" style="display: none;"/> 
 		    	</div>
 				<div class="popupTweet">
-				{% if retweet is defined  %}
-
- 			{% endif %}
+		
 			</div>
 		</div>
 

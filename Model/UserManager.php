@@ -30,8 +30,8 @@ class User {
       
          $stmt->execute();
           $search =  $stmt->fetchAll();
-
-    //   var_dump('<pre>',$search);
+        
+        
         return $search;
       
        }
@@ -141,7 +141,8 @@ class User {
         $stmt->bindParam(":postedOn",$postedOn);
         $stmt->bindParam(":retweetMsg",$retweetMsg);
         
-         $stmt->execute();
+        $stmt->execute();
+        return $status;
     }
     public function getUser($id){
         $dbm = DBManager::getInstance();
@@ -149,7 +150,7 @@ class User {
         $result = $pdo->prepare("SELECT * FROM users WHERE id = :id");
         $result->bindParam(':id',$id);
         $result->execute();
-        $post = $result->fetch();
+        $post = $result->fetch(2);
 
         return $post;
     }

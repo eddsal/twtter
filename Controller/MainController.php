@@ -135,6 +135,7 @@ class MainController extends BaseController
         $getFromU = new User();
         $search = $getFromU->getUser($_SESSION['id']);
         $result = $getFromU->search($search);
+
        
         echo '<div class="nav-right-down-wrap"><ul> ';
     
@@ -144,7 +145,7 @@ class MainController extends BaseController
                         <li>
                           <div class="nav-right-down-inner">
                         <div class="nav-right-down-left">
-                          <a href="?action=searchprofile" ><img src="'.$search->profileImage.'"></a>
+                          <a href="?action=searchprofile&id='.$search->id.'" ><img src="'.$search->profileImage.'"></a>
                        </div>
                        <div class="nav-right-down-right">
                          <div class="nav-right-down-right-headline">
@@ -162,12 +163,18 @@ class MainController extends BaseController
     }
     public function searchProfileaction(){
         $getFromU = new User();     
-        $search = $getFromU->getUser($_SESSION['id']);
-        $result =['result'=>$getFromU->searchProfile($search)];
-        //var_dump('<pre>',$result);
-        //die();
-        return $this->render('searchprofile.html.twig',$result + $search);
-    }
+        $search = $getFromU->getUser($_GET['id']);
+        $arr = [
+            'search' => $search,
+        ];
+
+        
+            
+
+       
+        
+        return $this->render('searchprofile.html.twig', $arr);
+}
     public function settingsAction(){
         $getFromU = new User();
         $getFromT = new Tweet();
@@ -243,9 +250,10 @@ class MainController extends BaseController
         } else {
             $data =$getFromU->getUser($_SESSION['id']);
           
-           $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
+            $data = $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
                  //displaying tweet
-          return $this->render('profile.html.twig',$data + $dd + $count);
+           return $data;
+          // return $this->render('profile.html.twig',$data + $dd + $count);
 
            } 
         };
@@ -264,16 +272,13 @@ class MainController extends BaseController
     if(isset($_POST['showPopup'])){
             $userId =$_SESSION['id'];
             $tweetId =$_POST['showPopup'];
-           // $getId= $_POST['id'];
+            $getId= $_POST['id'];
            $getFromT = new Tweet();
+           $dd =['tweet'=>$getFromT->tweets()];
            $retweet =$getFromT->getRetweet($tweetId);
+          
 
-           var_dump($retweet);
-           die();
-                
-           
-       }
-   
+    }
    }
    public function likeAction(){
     if(isset($_POST['like'])){

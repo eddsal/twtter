@@ -31,7 +31,7 @@
 				<div class="drop-wrap">
 					<div class="drop-inner">
 						<ul>    
-							<li><a href="#">{{screenName}}</a></li>
+							<li><a href="#">{{ screenName }}</a></li>
 							<li><a href="?action=settings">Settings</a></li>
 							<li><a href="?action=logout">Log out</a></li>
 						</ul>
@@ -53,7 +53,7 @@
 <div class="profile-cover-wrap"> 
 	<div class="profile-cover-inner">
 		<div class="profile-cover-img">
-			<img src="#"/>
+			<img src="{{search.profileCover}}"/>
 		</div>
 	</div>
 	<div class="profile-nav">
@@ -65,7 +65,7 @@
 							TWEETS
 						</div>
 						<div class="n-bottom">
-							{{Tweet}}
+							{{search.Tweet}}
 						</div>
 					</a>
 				</li>
@@ -75,7 +75,7 @@
 							FOLLOWING
 						</div>
 						<div class="n-bottom">
-							<span class="count-following">{{following}}</span>
+							<span class="count-following">{{seacrh.following}}</span>
 						</div>
 					</a>
 				</li>
@@ -85,7 +85,7 @@
 						FOLLOWERS
 					</div>
 					<div class="n-bottom">
-						<span class="count-followers">{{folowers}}</span>
+						<span class="count-followers">{{search.folowers}}</span>
 					</div>
 				</a>
 				</li>
@@ -95,7 +95,7 @@
 						LIKES
 					</div>
 					<div class="n-bottom">
-						{{likes}}
+						{{search.likes}}
 					</div>
 				</a>
 				</li>
@@ -120,19 +120,21 @@
 			<div class="profile-info-wrap">
 				<div class="profile-info-inner">
 					<div class="profile-img">
-						<img src="{{search['profileImage']}}"/>
+					{# {% for results in result %} #}
+						<img src="{{search.profileImage}}"/>
+					{# {% endfor %} #}
 					</div>	
 					<div class="profile-name-wrap">
 						<div class="profile-name">
-							<a href="#">{{screenName}}</a>
+							<a href="#">{{search.screenName}}</a>
 						</div>
 						<div class="profile-tname">
-							@<span class="username">{{result['screenName']}}</span>
+							@<span class="username">{{search.screenName}}</span>
 						</div>
 					</div>
 					<div class="profile-bio-wrap">
 						<div class="profile-bio-inner">
-							{{bio}}
+							{{search.bio}}
 						</div>
 					</div>
 		<div class="profile-extra-info">

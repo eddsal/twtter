@@ -35,29 +35,33 @@ window.onload = function () {
     $('#tweetBtn').on('click', function () {
         var tweet = $(this).val();
         var status = document.getElementById('status').value;
+        var wrap = document.querySelector('.all-tweet');
+
         $.post('http://localhost/twtter/?action=tweet', {
             tweet: tweet,
             status: status
-        }, function (tweets) {
-             $('.tweets').html(tweets);
-           return false;
+        }, function (wr) {
+            console.log(wr);
+            $(wrap).prepend(status);
+            return false;
   
         });
     })
     //retweet action
     $('.retweet').on('click', function (data) {
+                     
         var tweetId = $(this).data('tweet');
         var user = $(this).data('user');
         $counter = $(this).find('.retweetsCount');
         $count = $counter.text();
-        $button = $(this);
+        $button = $('.retweet-it');
 
         $.post('http://localhost/twtter/?action=retweet',{
             showPopup:tweetId, 
             user:user
         },
             function(data){
-            $('.tweet').html(data);
+            $('.popupTweet').html(data);
         })
     })
 
@@ -77,8 +81,11 @@ window.onload = function () {
             button.find('.fa-heart').removeClass('fa-heart-o');
           
         })
-      
-      
+        console.log(count);
+      if(count > 2){
+        button.find('.fa-heart').removeClass('fa-heart-o');
+          return false;
+      }      
     })
 
 
