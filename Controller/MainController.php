@@ -5,10 +5,12 @@ namespace Controller;
 require_once('Model/UserManager.php');
 require_once('Model/FollowManager.php');
 require_once('Model/TweetManager.php');
+require_once('Model/LogManager.php');
 use UserManager\User;
 use Cool\BaseController;
 use TweetManager\Tweet;
 use FollowManager\Follow;
+use LogManager\LogManager;
 
 //require_once('config/init.php');
 
@@ -25,6 +27,8 @@ class MainController extends BaseController
             $password = $_POST['password'];
             if(empty($email) || empty($password)){
                 $data['error'] = "please fill in the blank";
+                $logManager = new LogManager();
+                $logManager->writeToLog('try to go on action=login');
             }   
             if(!empty($email) || !empty($password)){
                 $getFromU = new User();
@@ -35,10 +39,12 @@ class MainController extends BaseController
                 }
                 if($getFromU->checklogin($email, $password) === false){
                      $data['error'] = "Email or Password is incorrect!!";
+                     $logManager->writeToLog('inccorect pass');
                     return $this->render('home.html.twig', $data);
                   }       
             }else{
                 $data['error'] = "please enter Email and Password ";
+                $logManager->writeToLog('try to go on action=login');
                 return $this->render('home.html.twig', $data);
             }       
             if (true == $data) {
@@ -49,7 +55,8 @@ class MainController extends BaseController
                 $getFromT = new Tweet();
                 $twts =['tweet'=>$getFromT->tweets()];
                 $count=$getFromT->countTweet($_SESSION['id']);
-
+                $logManager = new LogManager();
+                $logManager->writeToLog(' went  on action=login');
               return $this->render('profile.html.twig',$data + $twts + $count );
         } 
      }
@@ -102,6 +109,8 @@ class MainController extends BaseController
                         $getFromU->register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website);
                         $getFromT = new Tweet();
                         $twts =['tweet'=>$getFromT->tweets()];
+                        $logManager = new LogManager();
+                        $logManager->writeToLog('Create account with the id ' . $id, false);
                         return $this->render('profile.html.twig', $datau + $twts);    
                     }
                 }
@@ -113,6 +122,8 @@ class MainController extends BaseController
     public function logoutaction()
     {
         $getFromU = new User();
+        $logManager = new LogManager();
+        $logManager->writeToLog('disconnected', false);
         $getFromU->logout();
         return $this->redirectToRoute('home');
     }
@@ -126,22 +137,16 @@ class MainController extends BaseController
         $twts =['tweet'=>$getFromT->tweets()];
         $count=$getFromT->countTweet($_SESSION['id']);
         return $this->render('profile.html.twig', $data + $twts +$count);
-
-     
         
-    }
- 
-     
+    }     
     public function searchaction(){
       
     if(isset($_POST['search'])){
         $getFromU = new User();
         $search = $getFromU->getUser($_SESSION['id']);
-        $result = $getFromU->search($search);
-
-       
+        $result = $getFromU->search($search);       
         echo '<div class="nav-right-down-wrap"><ul> ';
-    
+
         foreach($result as $search){
            
             echo '
@@ -190,10 +195,6 @@ class MainController extends BaseController
       //  var_dump('<pre>',$data['id']);
         return $this->render('pEdit.html.twig',$data + $dd + $count);
      //   return $this->render('searchprofile.html.twig',$data + $dd + $count);
-
-
-
-
     }
     public function updateAction(){
         $getFromU = new User();
@@ -258,7 +259,10 @@ class MainController extends BaseController
            return $data;
           // return $this->render('profile.html.twig',$data + $dd + $count);
           $getLike = $getFromT->getlike();
-          var_dump($getLike);
+
+          $logManager = new LogManager();
+          $logManager->writeToLog('user with'+$id +'tweeted' + $status);      
+        
            }
             
         };
@@ -269,8 +273,8 @@ class MainController extends BaseController
         if(isset($_POST['deleteTweet'])){
          $getFromT = new Tweet;
          $delete = $getFromT->deleteTweet();
-        
-
+         $logManager = new LogManager();
+         $logManager->writeToLog('user deleted' +$delete);      
         }
    }
    public function retweetAction(){
@@ -281,40 +285,29 @@ class MainController extends BaseController
           // $dd =['tweet'=>$getFromT->tweets()];
           $getFromT= new Tweet();
            $retweet =$getFromT->sendRetweet($tweetId);
-          
-          
-
     }
    }
    public function likeAction(){
     if(isset($_POST['like'])){
-
         $userId =$_SESSION['id'];
         $tweetId =$_POST['like'];
-      //  $getId= $_POST['id'];
+      // $getId= $_POST['id'];
        $getFromT = new Tweet();
-       $like =$getFromT->like($userId,$tweetId);
-      
+       $like =$getFromT->like($userId,$tweetId); 
+       $logManager = new LogManager();
+       $logManager->writeToLog($userId +'liked'+ $tweetId);      
     }
-
    }
-
    public function followAction(){
        if(isset($_POST['follow'])){
          $getFromU = new User();
-        
-        $userId = $getFromU->getUser($_SESSION['id']);
-        $userId = $userId['id'];
-        
-          $followerId = $_POST['id'];
-          var_dump($followerId);
-
-           $getFromF = new Follow;
-         $follow = $getFromF->checkfollow($followerId,$userId);
-
-          
+         $userId = $getFromU->getUser($_SESSION['id']);
+         $userId = $userId['id'];
+         $followerId = $_POST['id'];
+         $getFromF = new Follow;
+         $follow = $getFromF->checkfollow($followerId,$userId);    
+         $logManager = new LogManager();
+         $logManager->writeToLog($userId +'followed'+ $followerId);      
        }
    }
-
-
 }

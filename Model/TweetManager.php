@@ -24,8 +24,8 @@ class Tweet extends User {
         
             $stmt->execute();
             $tweets = $stmt->fetchAll();
-        //  $tweets=array_column($tweets,'status');
-        return $tweets;
+      
+           return $tweets;
     }
     public function deleteTweet(){
         $dbManager = DBManager::getInstance();
@@ -53,9 +53,9 @@ class Tweet extends User {
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $date = date("Y-m-d H:i:s");
-    $stmt = $pdo->prepare("UPDATE `tweets` SET `retweetId` = $tweetId, `retweetBy`={$_SESSION['id']}, `retweetMsg` = 'sasa'");
-           $retweet= $stmt->execute();
-           var_dump($retweet);  
+        $stmt = $pdo->prepare("UPDATE `tweets` SET `retweetId` = $tweetId, `retweetBy`={$_SESSION['id']}, `retweetMsg` = 'sasa'");
+        $retweet= $stmt->execute();
+          
     
         return $retweet;
     }
@@ -63,14 +63,9 @@ class Tweet extends User {
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
         $stmt = $pdo->prepare("SELECT * FROM tweets ,users    WHERE 'tweetID' = $tweetId  AND tweetBy= {$_SESSION['id']} ");
-        var_dump($stmt);
-        die();
         $retweet =  $stmt->execute();
-        ;
-        return $retweet;
-      
-        // die();
-       
+    
+        return $retweet; 
 
     }
     public function like($userId,$tweetId){
@@ -92,14 +87,6 @@ class Tweet extends User {
         $get =$stmt->execute();
 
         return $get;
-        var_dump($get);
-
-    
     }
-
-
-
-
-
    
 }

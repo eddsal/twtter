@@ -13,12 +13,8 @@ class User {
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users`");
-      
         $stmt->execute();
         $search =  $stmt->fetchAll(\PDO::FETCH_OBJ);
-
-
-
       
         return $search;
       
@@ -27,11 +23,9 @@ class User {
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `screenName` LIKE ?");
-      
-         $stmt->execute();
-          $search =  $stmt->fetchAll();
-        
-        
+        $stmt->execute();
+        $search =  $stmt->fetchAll();
+         
         return $search;
       
        }
@@ -54,7 +48,6 @@ class User {
     {
         $_SESSION['email'] = $email;
         $_SESSION['id'] = $id;
-      
     }
     //insertin user data into my database + default photo and cover
     public function register($id,$username,$email, $password,$screenName,$profileImage,$profileCover,$followers,$following,$bio,$country,$website){
@@ -77,11 +70,8 @@ class User {
         $stmt->bindParam(":website",$website);
         $stmt->execute();
 
-
         $id =   $pdo->lastInsertId();
         $_SESSION['id'] = $id;
-             return var_dump($id);
-
     }
     //check email on registration
         public function checkEmail($email){
@@ -119,18 +109,15 @@ class User {
                  foreach ($fields as $key => $value){
                     $stmt->bindValue(':'.$key, $value);
             } 
-
             $stmt->execute();  
         }
     }
 
-   
     public function create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
         $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->prepare("INSERT INTO `tweets`(`tweetID`, `status`, `tweetBy`, `retweetId`, `retweetBy`, `tweetImage`, `likeCount`, `retweetCount`, `postedOn`, `retweetMsg`) VALUES (NULL, :status, :id ,:retweetId,:retweetBy,:tweetImage,:likeCount,:retweetCount,:postedOn,:retweetMsg)");
-    
+        $stmt = $pdo->prepare("INSERT INTO `tweets`(`tweetID`, `status`, `tweetBy`, `retweetId`, `retweetBy`, `tweetImage`, `likeCount`, `retweetCount`, `postedOn`, `retweetMsg`) VALUES (NULL, :status, :id ,:retweetId,:retweetBy,:tweetImage,:likeCount,:retweetCount,:postedOn,:retweetMsg)");    
         $stmt->bindParam(":status",$status);
         $stmt->bindParam(":id",$_SESSION['id']);
         $stmt->bindParam(":retweetId",$retweetId);
