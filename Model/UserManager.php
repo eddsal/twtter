@@ -26,7 +26,7 @@ class User {
        public function searchProfile(){
         $dbm = DBManager::getInstance();
         $pdo = $dbm->getPdo();
-        $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users`");
+        $stmt = $pdo->prepare("SELECT `id`, `username`, `screenName` , `profileImage`, `profileCover` FROM `users` WHERE `screenName` LIKE ?");
       
          $stmt->execute();
           $search =  $stmt->fetchAll();
