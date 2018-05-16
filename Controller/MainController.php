@@ -3,11 +3,12 @@
 namespace Controller;
 
 require_once('Model/UserManager.php');
-
+require_once('Model/FollowManager.php');
 require_once('Model/TweetManager.php');
 use UserManager\User;
 use Cool\BaseController;
 use TweetManager\Tweet;
+use FollowManager\Follow;
 
 //require_once('config/init.php');
 
@@ -125,6 +126,8 @@ class MainController extends BaseController
         $twts =['tweet'=>$getFromT->tweets()];
         $count=$getFromT->countTweet($_SESSION['id']);
         return $this->render('profile.html.twig', $data + $twts +$count);
+
+     
         
     }
  
@@ -168,11 +171,8 @@ class MainController extends BaseController
             'search' => $search,
         ];
 
-        
-            
-
        
-        
+
         return $this->render('searchprofile.html.twig', $arr);
 }
     public function settingsAction(){
@@ -251,11 +251,13 @@ class MainController extends BaseController
             $data =$getFromU->getUser($_SESSION['id']);
           
             $data = $getFromU->create($tweetId,$status,$id,$retweetId,$retweetBy,$tweetImage,$likeCount,$retweetCount,$postedOn,$retweetMsg);
-                 //displaying tweet
+           //displaying tweet
            return $data;
           // return $this->render('profile.html.twig',$data + $dd + $count);
-
-           } 
+          $getLike = $getFromT->getlike();
+          var_dump($getLike);
+           }
+            
         };
         
    }  
@@ -270,12 +272,13 @@ class MainController extends BaseController
    }
    public function retweetAction(){
     if(isset($_POST['showPopup'])){
-            $userId =$_SESSION['id'];
+          //  $userId =$_SESSION['id'];
             $tweetId =$_POST['showPopup'];
-            $getId= $_POST['id'];
-           $getFromT = new Tweet();
-           $dd =['tweet'=>$getFromT->tweets()];
-           $retweet =$getFromT->getRetweet($tweetId);
+           $getFromU = new User();
+          // $dd =['tweet'=>$getFromT->tweets()];
+          $getFromT= new Tweet();
+           $retweet =$getFromT->sendRetweet($tweetId);
+          
           
 
     }
@@ -291,6 +294,23 @@ class MainController extends BaseController
       
     }
 
+   }
+
+   public function followAction(){
+       if(isset($_POST['follow'])){
+        $getFromU = new User();
+        
+        $userId = $getFromU->getUser($_SESSION['id']);
+        $userId = $userId['id'];
+        
+          $followerId = $_POST['id'];
+          var_dump($followerId);
+
+           $getFromF = new Follow;
+         $follow = $getFromF->checkfollow($followerId,$userId);
+
+          
+       }
    }
 
 

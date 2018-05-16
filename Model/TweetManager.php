@@ -47,12 +47,26 @@ class Tweet extends User {
 
 
     }
+    
+    public function sendRetweet($tweetId){
+        $dbm = DBManager::getInstance();
+        $pdo = $dbm->getPdo();
+        $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $date = date("Y-m-d H:i:s");
+    $stmt = $pdo->prepare("UPDATE `tweets` SET `retweetId` = $tweetId, `retweetBy`={$_SESSION['id']}, `retweetMsg` = 'sasa'");
+           $retweet= $stmt->execute();
+           var_dump($retweet);  
+    
+        return $retweet;
+    }
     public function getRetweet($tweetId){
         $dbManager = DBManager::getInstance();
         $pdo = $dbManager->getPdo();
-        $stmt = $pdo->prepare("SELECT * FROM `tweets`,`users` WHERE 'tweetID' = $tweetId AND tweetBy= {$_SESSION['id']} ");
+        $stmt = $pdo->prepare("SELECT * FROM tweets ,users    WHERE 'tweetID' = $tweetId  AND tweetBy= {$_SESSION['id']} ");
+        var_dump($stmt);
+        die();
         $retweet =  $stmt->execute();
-     
+        ;
         return $retweet;
       
         // die();
@@ -69,9 +83,20 @@ class Tweet extends User {
         $like = $pdo->prepare("INSERT INTO `likes` (`likeBy` ,`likeOn`) VALUES({$_SESSION['id']} , $tweetId )");
         $like->execute();
 
-        
-
     }
+    public function getlike(){
+        $dbManager = DBManager::getInstance();
+        $pdo = $dbManager->getPdo();
+        $stmt = $pdo->prepare("SELECT  * FROM `likes` ");
+        
+        $get =$stmt->execute();
+
+        return $get;
+        var_dump($get);
+
+    
+    }
+
 
 
 

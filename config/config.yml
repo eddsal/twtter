@@ -13,5 +13,6 @@ routes:
     retweet: "Main:retweet"
     like: "Main:like"
     searchprofile: "Main:searchProfile"
+    follow: "Main:follow"
  
 
