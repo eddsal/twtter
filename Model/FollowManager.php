@@ -20,15 +20,8 @@ public function checkfollow($followerId,$userId){
         return $follow;
 }
 
-public function followBtn($profileId,$userId){
-    $data = $this->checkfollow($profileId,$userId);
-    if($_SESSION === true){
 
-    }else{
-        echo "<button class='f-btn' onclick=location.href='index.php'><i class='fa fa-user-plus'></i></button>" ;
-    }
 
-}
 
 
 

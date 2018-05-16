@@ -170,10 +170,13 @@ class MainController extends BaseController
         $arr = [
             'search' => $search,
         ];
+        $getFromT = new Tweet();
+        $dd =['tweet'=>$getFromT->tweetByid($search)];
+       // $count=$getFromT->countTweet($_GET['id']);
 
-       
+      
 
-        return $this->render('searchprofile.html.twig', $arr);
+        return $this->render('searchprofile.html.twig', $arr + $dd );
 }
     public function settingsAction(){
         $getFromU = new User();
@@ -298,7 +301,7 @@ class MainController extends BaseController
 
    public function followAction(){
        if(isset($_POST['follow'])){
-        $getFromU = new User();
+         $getFromU = new User();
         
         $userId = $getFromU->getUser($_SESSION['id']);
         $userId = $userId['id'];

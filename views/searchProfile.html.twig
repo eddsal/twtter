@@ -102,7 +102,8 @@
 			</ul>
 			<div class="edit-button">
 				<span>
-	              <button class="f-btn follow-btn"  data-follow="user_id" data-user="user_id"><i class="fa fa-user-plus"></i> Follow </button>   
+	              <button class="f-btn follow-btn"  data-follow="user_id" data-user="user_id"><i class="fa fa-user-plus"></i> Follow </button>     
+				   
 				</span>
 			</div>
 		</div>
@@ -175,6 +176,7 @@
 				</ul>						
 			</div>
 		</div>
+		
 		<div class="profile-extra-footer">
 			<div class="profile-extra-footer-head">
 				<div class="profile-extra-info">
@@ -195,16 +197,69 @@
 					  <li><img src="#"/></li>
 				</ul>
 			</div>
+			
 				<!-- whoToFollow -->
 
 				<!-- Trends -->
 		</div>
+		
 	</div>
 		<!--PROFILE INFO INNER END-->
 		</div>
 		<!--PROFILE INFO WRAPPER END-->
+		
 
-		<div class="popupTweet"></div>
+		<div class="popupTweet">
+				   	{% for tweets in tweet %} 
+			<div class="all-tweet">
+<div class="t-show-wrap">	
+ <div class="t-show-inner">
+	<div class="t-show-popup">
+		<div class="t-show-head">
+			<div class="t-show-img">
+				<img src="{{profileImage}}"/>
+			</div>
+			<div class="t-s-head-content">
+				<div class="t-h-c-name">
+					<span><a href="PROFILE-LINK">{{screenName}}</a></span>
+					<span>@USERNAMAE</span>
+					<span>{{tweets['postedOn']}}</span>
+				</div>
+				<div class="t-h-c-dis">
+				{{tweets['status']}}
+				</div>
+			</div>
+		</div>
+	
+		<div class="t-show-body">
+		  <div class="t-s-b-inner">
+		   <div class="t-s-b-inner-in">
+		     <img src="{{tweetImage}}" class="imagePopup"/>
+		   </div>
+		  </div>
+		</div>
+		
+	</div>
+	<div class="t-show-footer">
+		<div class="t-s-f-right">
+			<ul> 
+			<li><button><a href="#"><i class="fa fa-share" aria-hidden="true"></i></a></button></li>	
+				<li><button  name="retweet"class="retweet" data-tweet={{tweets['tweeID']}} data-user={{tweets['tweetBy']}} ><i class="fa fa-retweet" aria-hidden="true"></i><span class='retweetsCount'></span></button></li>
+				<li><button  class="likeBtn" data-tweet={{tweets['tweetID']}} data-user={{tweets['tweetBy']}}><i class="fa fa-heart-o" aria-hidden="true"></i><span class="likeCount"></span></button></li>
+					<li>
+					<a href="#" class="more"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+					<ul> 
+					  <li><label class="deleteTweet"  data-tweet={{tweets['tweetID']}} data-user={{tweets['tweetBy']}} name="deleteTweet"class="deleteTweet">Delete Tweet</label></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+			   {% endfor %}
+		</div>
 		</div>
 		<!-- in left wrap-->
 	</div>
@@ -221,5 +276,6 @@
 <!-- in wrappper ends-->
 
 </div><!-- ends wrapper -->
+
 
 {% endblock %}

@@ -101,9 +101,14 @@ window.onload = function () {
             follow: follow,
             id:id
         });
-       
+        $('.follow-btn').html("Following");
+        
+        if( $('.follow-btn') == "following"){
+           alert("ds");
 
+        }
     });
+    
 
 
 };
