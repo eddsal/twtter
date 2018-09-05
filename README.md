@@ -1,4 +1,4 @@
-# Cool Framework by Sup'Internet DEV 2020
+
 
 Installation
 ============
@@ -17,6 +17,4 @@ You can get composer here : <https://getcomposer.org/download/>
 To keep in mind
 ===============
 
-- Filer
-- Pokedex (with an API)
-- Intranet
+rebuild the database
